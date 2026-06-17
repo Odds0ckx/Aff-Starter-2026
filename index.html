@@ -237,7 +237,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:1000;transition:padding .3s}
 #qtSvgPaths use[href="#qtP2"]{--qdot:34px;--qgap:60px;stroke-dasharray:var(--qdot) var(--qgap) 120px var(--qgap) var(--qdot) var(--qgap) 300px var(--qgap) var(--qdot) var(--qgap) 150px var(--qgap) var(--qdot) 20000px}
 #qtSvgPaths use[href="#qtP3"]{--qdot:25px;--qgap:40px;stroke-dasharray:var(--qdot) var(--qgap) 120px var(--qgap) var(--qdot) var(--qgap) 250px var(--qgap) var(--qdot) var(--qgap) 150px var(--qgap) var(--qdot) 20000px}
 #qtSvgPaths use[href="#qtP4"]{--qdot:40px;--qgap:70px;stroke-dasharray:var(--qdot) var(--qgap) 100px var(--qgap) var(--qdot) var(--qgap) 200px var(--qdot) 20000px}
-.qt-tp{opacity:0;transition:opacity .4s}
+.qt-tp{opacity:0}
 
 /* CONSULTANCY */
 .con-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:50px;align-items:center}
@@ -805,41 +805,43 @@ try{
       gsap.registerPlugin(ScrollTrigger);
       var qtScroll=document.querySelector('.qt-scroll');
       if(qtScroll){
-        /* Animated dashed paths driven by scroll */
-        gsap.to(qtScroll,{
-          '--qt-stroke':function(){return '-2400'},
-          scrollTrigger:{
-            trigger:qtScroll,
-            start:'top 80%',
-            end:'bottom 20%',
-            scrub:1
+        /* Set initial CSS variable so browsers know the starting value */
+        qtScroll.style.setProperty('--qt-stroke','0');
+        /* Drive dashoffset via onUpdate — most reliable for CSS custom props */
+        ScrollTrigger.create({
+          trigger:qtScroll,
+          start:'top 75%',
+          end:'bottom 25%',
+          scrub:1.5,
+          onUpdate:function(self){
+            qtScroll.style.setProperty('--qt-stroke',String(-(2400*self.progress)));
           }
         });
-        /* Reveal card text spans on scroll */
-        document.querySelectorAll('.qt-tp').forEach(function(tp,i){
-          gsap.fromTo(tp,{opacity:0,y:12},{
-            opacity:1,y:0,duration:.6,ease:'power2.out',
-            scrollTrigger:{
-              trigger:tp,
-              start:'top 85%',
-              toggleActions:'play none none none'
-            },
-            delay:i*0.08
+        /* Card entrance */
+        document.querySelectorAll('.qt-card-wrap').forEach(function(cw,i){
+          gsap.set(cw,{opacity:0,x:-24});
+          ScrollTrigger.create({
+            trigger:cw,
+            start:'top 88%',
+            onEnter:function(){
+              gsap.to(cw,{opacity:1,x:0,duration:.8,ease:'power3.out',delay:i*.1});
+            }
           });
         });
-        /* Subtle card entrance */
-        document.querySelectorAll('.qt-card-wrap').forEach(function(cw,i){
-          gsap.fromTo(cw,{opacity:0,x:-30},{
-            opacity:1,x:0,duration:.9,ease:'power3.out',
-            scrollTrigger:{
-              trigger:cw,
-              start:'top 88%',
-              toggleActions:'play none none none'
-            },
-            delay:i*0.12
+        /* Text span reveals */
+        document.querySelectorAll('.qt-tp').forEach(function(tp,i){
+          ScrollTrigger.create({
+            trigger:tp,
+            start:'top 90%',
+            onEnter:function(){
+              gsap.to(tp,{opacity:1,y:0,duration:.55,ease:'power2.out',delay:i*.04});
+            }
           });
         });
       }
+    } else {
+      /* Failsafe: show text if ScrollTrigger unavailable */
+      document.querySelectorAll('.qt-tp,.qt-card-wrap').forEach(function(el){el.style.opacity='1'});
     }
   }
 }catch(e){}
