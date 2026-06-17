@@ -4,203 +4,155 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Feature Cards — Aff-Starter</title>
-
-<!-- React 18 UMD (stable, wide CDN support) -->
-<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-<!-- Babel standalone for in-browser JSX -->
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: #0A0A0B;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    -webkit-font-smoothing: antialiased;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 48px 24px;
-  }
-  #root { width: 100%; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:#0A0A0B;
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:48px 24px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  width:100%;
+  max-width:936px;
+}
+@media(max-width:767px){
+  .grid{grid-template-columns:1fr;gap:40px}
+}
 
-  /* Grid */
-  .grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 40px;
-    width: 100%;
-    max-width: 936px;
-    margin: 0 auto;
-  }
-  @media (min-width: 768px) {
-    .grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  }
+/* Card wrapper */
+.card-wrap{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  width:100%;
+  max-width:300px;
+  margin:0 auto;
+  opacity:0;
+  transform:translateY(30px);
+  animation:fadeUp .8s ease-out forwards;
+}
+.card-wrap:nth-child(1){animation-delay:.1s}
+.card-wrap:nth-child(2){animation-delay:.2s}
+.card-wrap:nth-child(3){animation-delay:.3s}
+@keyframes fadeUp{
+  to{opacity:1;transform:translateY(0)}
+}
 
-  /* Card wrapper */
-  .card-wrap {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 100%;
-    max-width: 260px;
-    margin: 0 auto;
-  }
-  @media (min-width: 768px) {
-    .card-wrap { max-width: 300px; }
-  }
+/* Glow behind card */
+.card-glow{
+  position:absolute;
+  inset:0;
+  height:300px;
+  border-radius:40px;
+  opacity:.6;
+  pointer-events:none;
+  filter:blur(45px);
+  z-index:0;
+}
 
-  /* Glow layer */
-  .card-glow {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 260px;
-    opacity: 0.6;
-    border-radius: 40px;
-    pointer-events: none;
-  }
-  @media (min-width: 768px) {
-    .card-glow { height: 300px; }
-  }
-
-  /* Foreground card */
-  .card-fg {
-    position: relative;
-    align-self: stretch;
-    height: 260px;
-    border-radius: 40px;
-    z-index: 10;
-    overflow: hidden;
-    border: 8px solid transparent;
-  }
-  @media (min-width: 768px) {
-    .card-fg { height: 300px; }
-  }
-
-  /* Card inner */
-  .card-inner {
-    width: 100%;
-    height: 100%;
-    padding: 28px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  .card-icon { color: rgba(255,255,255,.9); }
-  .card-icon svg { width: 32px; height: 32px; stroke-width: 2.5; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
-  .card-title {
-    color: #ffffff;
-    font-weight: 500;
-    font-size: 1.25rem;
-    margin-bottom: 12px;
-    letter-spacing: -0.025em;
-  }
-  .card-desc {
-    color: #9ca3af;
-    font-size: 14px;
-    line-height: 1.6;
-    font-weight: 400;
-  }
-
-  /* Entry animation */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  .card-wrap {
-    opacity: 0;
-    animation: fadeUp 0.8s ease-out forwards;
-  }
-  .card-wrap:nth-child(1) { animation-delay: 0.1s; }
-  .card-wrap:nth-child(2) { animation-delay: 0.2s; }
-  .card-wrap:nth-child(3) { animation-delay: 0.3s; }
+/* Foreground card */
+.card-fg{
+  position:relative;
+  height:300px;
+  border-radius:40px;
+  z-index:1;
+  overflow:hidden;
+  border:8px solid transparent;
+}
+.card-inner{
+  width:100%;
+  height:100%;
+  padding:28px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+.card-icon{
+  color:rgba(255,255,255,.9);
+  line-height:0;
+}
+.card-icon svg{
+  width:32px;height:32px;
+  stroke:currentColor;stroke-width:2.5;
+  fill:none;stroke-linecap:round;stroke-linejoin:round;
+}
+.card-title{
+  color:#fff;
+  font-weight:500;
+  font-size:1.25rem;
+  letter-spacing:-.025em;
+  margin-bottom:12px;
+}
+.card-desc{
+  color:#9ca3af;
+  font-size:14px;
+  line-height:1.6;
+  font-weight:400;
+}
 </style>
 </head>
 <body>
-<div id="root"></div>
+<div class="grid">
 
-<script type="text/babel">
-  const { createRoot } = ReactDOM;
-
-  /* ── Lucide icons as inline SVG ── */
-  const Monitor = () => (
-    <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-  );
-  const Palette = () => (
-    <svg viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
-  );
-  const Zap = () => (
-    <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-  );
-
-  /* ── FeatureCard component ── */
-  function FeatureCard({ title, description, icon: Icon, gradient }) {
-    return (
-      <div className="card-wrap">
-        {/* Glow */}
-        <div
-          className="card-glow"
-          style={{ background: gradient, filter: "blur(45px)" }}
-        />
-        {/* Foreground with gradient border */}
-        <div
-          className="card-fg"
-          style={{
-            background: `linear-gradient(#1A1A1C, #1A1A1C) padding-box, ${gradient} border-box`,
-          }}
-        >
-          <div className="card-inner">
-            <div className="card-icon"><Icon /></div>
-            <div>
-              <div className="card-title">{title}</div>
-              <p className="card-desc">{description}</p>
-            </div>
-          </div>
+  <!-- Card 1: Hardware — purple → lavender → orange -->
+  <div class="card-wrap">
+    <div class="card-glow" style="background:linear-gradient(137deg,#7c3aed 0%,#c084fc 45%,#f97316 100%)"></div>
+    <div class="card-fg" style="background:linear-gradient(#1A1A1C,#1A1A1C) padding-box,linear-gradient(137deg,#7c3aed 0%,#c084fc 45%,#f97316 100%) border-box">
+      <div class="card-inner">
+        <div class="card-icon">
+          <!-- Monitor icon -->
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <div>
+          <div class="card-title">Hardware</div>
+          <p class="card-desc">My entire desktop setup is built for power. It is silent, durable, and holds my focus.</p>
         </div>
       </div>
-    );
-  }
+    </div>
+  </div>
 
-  /* ── Card data — purple + orange only ── */
-  const CARDS = [
-    {
-      title: "Hardware",
-      description: "My entire desktop setup is built for power. It is silent, durable, and holds my focus.",
-      icon: Monitor,
-      gradient: "linear-gradient(137deg, #7c3aed 0%, #c084fc 45%, #f97316 100%)",
-    },
-    {
-      title: "Studio",
-      description: "Studio is where I define every single pixel. It is the hub for each canvas I deliver.",
-      icon: Palette,
-      gradient: "linear-gradient(137deg, #f97316 0%, #fb923c 50%, #7c3aed 100%)",
-    },
-    {
-      title: "Motion",
-      description: "I use Motion to build lively prototypes, bridging the gap between views and code.",
-      icon: Zap,
-      gradient: "linear-gradient(137deg, #a855f7 0%, #f97316 50%, #6d28d9 100%)",
-    },
-  ];
-
-  /* ── App ── */
-  function App() {
-    return (
-      <main style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "48px 24px" }}>
-        <div className="grid">
-          {CARDS.map((card) => (
-            <FeatureCard key={card.title} {...card} />
-          ))}
+  <!-- Card 2: Studio — orange → amber → purple -->
+  <div class="card-wrap">
+    <div class="card-glow" style="background:linear-gradient(137deg,#f97316 0%,#fb923c 50%,#7c3aed 100%)"></div>
+    <div class="card-fg" style="background:linear-gradient(#1A1A1C,#1A1A1C) padding-box,linear-gradient(137deg,#f97316 0%,#fb923c 50%,#7c3aed 100%) border-box">
+      <div class="card-inner">
+        <div class="card-icon">
+          <!-- Palette icon -->
+          <svg viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
         </div>
-      </main>
-    );
-  }
+        <div>
+          <div class="card-title">Studio</div>
+          <p class="card-desc">Studio is where I define every single pixel. It is the hub for each canvas I deliver.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  createRoot(document.getElementById("root")).render(<App />);
-</script>
+  <!-- Card 3: Motion — violet → orange → dark purple -->
+  <div class="card-wrap">
+    <div class="card-glow" style="background:linear-gradient(137deg,#a855f7 0%,#f97316 50%,#6d28d9 100%)"></div>
+    <div class="card-fg" style="background:linear-gradient(#1A1A1C,#1A1A1C) padding-box,linear-gradient(137deg,#a855f7 0%,#f97316 50%,#6d28d9 100%) border-box">
+      <div class="card-inner">
+        <div class="card-icon">
+          <!-- Zap icon -->
+          <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div>
+          <div class="card-title">Motion</div>
+          <p class="card-desc">I use Motion to build lively prototypes, bridging the gap between views and code.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
 </body>
 </html>
