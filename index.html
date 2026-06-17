@@ -1,702 +1,756 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AFF Starter — Book. Track. Pay.</title>
-<meta name="description" content="The all-in-one affiliate platform connecting iGaming brands with streamers and affiliates. Secure crypto escrow, real-time KPI tracking, transparent deals.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
-<style>
-:root{
-  --ink:#1a1209;
-  --cream:#fff8e8;
-  --paper:#fffcf4;
-  --purple:#a855f7;
-  --orange:#ff7a1a;
-  --pink:#ff4fa3;
-  --lime:#c7ff4d;
-  --blue:#60d7ff;
-  --red:#ef4444;
-  --b:3px solid var(--ink);
-  --b5:5px solid var(--ink);
-  --sh:5px 5px 0 var(--ink);
-  --sh8:8px 8px 0 var(--ink);
-  --fd:'Archivo Black',sans-serif;
-  --fb:'Inter',sans-serif;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:var(--fb);background:var(--cream);color:var(--ink);overflow-x:hidden;cursor:none}
-a{color:inherit;text-decoration:none}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>aff-starter — Book Streamers. Manage Affiliates. iGaming Growth Platform.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --white: #ffffff;
+      --off: #f6f6f4;
+      --ink: #0d0d0d;
+      --mid: #666666;
+      --line: #e0e0e0;
+      --orange: #ff2e00;
+      --orange-l: #ff5533;
+      --blue: #0040ff;
+      --yellow: #ffe500;
+      --lime: #aaff00;
+      --violet: #8800ff;
+      --cyan: #00d9ff;
+      --b: 2px solid var(--ink);
+      --b1: 1px solid var(--ink);
+      --ss: 3px 3px 0 var(--ink);
+      --sm: 5px 5px 0 var(--ink);
+      --sl: 8px 8px 0 var(--ink);
+      --so: 5px 5px 0 var(--orange);
+      --fd: 'Unbounded', sans-serif;
+      --fb: 'Space Grotesk', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { background: var(--white); color: var(--ink); font-family: var(--fb); overflow-x: hidden; cursor: none; }
+    a { color: inherit; text-decoration: none; }
+    img, svg { display: block; max-width: 100%; }
+    ::selection { background: var(--yellow); color: var(--ink); }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--off); }
+    ::-webkit-scrollbar-thumb { background: var(--ink); }
 
-/* NOISE */
-.noise{position:fixed;inset:0;pointer-events:none;z-index:9990;opacity:.022;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size:256px}
+    /* CURSOR */
+    #cdot { width:8px;height:8px;background:var(--orange);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%); }
+    #cring { width:34px;height:34px;border:2px solid var(--ink);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s,border-color .2s; }
+    #cring.hov { width:52px;height:52px;background:rgba(255,46,0,.08);border-color:var(--orange); }
 
-/* CURSOR */
-.cur{position:fixed;pointer-events:none;z-index:9999;top:0;left:0}
-#cd{width:10px;height:10px;background:var(--ink);border-radius:50%;transform:translate(-50%,-50%)}
-#cr{width:42px;height:42px;border:2px solid var(--ink);border-radius:50%;transform:translate(-50%,-50%);opacity:.45;transition:width .22s,height .22s,opacity .22s}
-#cr.big{width:66px;height:66px;opacity:.28}
+    /* NAV */
+    nav { position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:1rem 2.5rem;background:rgba(255,255,255,.97);border-bottom:2px solid transparent;transition:border-color .25s; }
+    nav.stuck { border-bottom-color:var(--ink); }
+    .nb { display:flex;align-items:center;gap:.65rem;font-family:var(--fd);font-weight:900;font-size:1.05rem;letter-spacing:-.02em; }
+    .nb svg { width:38px;height:38px; }
+    .nl { display:flex;gap:2rem;list-style:none; }
+    .nl a { font-size:.875rem;font-weight:600;position:relative;padding-bottom:3px; }
+    .nl a::after { content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--orange);transition:width .25s; }
+    .nl a:hover::after { width:100%; }
+    .nc { display:flex;gap:.75rem;align-items:center; }
 
-/* NAV */
-#nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--cream);border-bottom:var(--b5);height:68px;display:flex;align-items:center;padding:0 2rem;gap:2rem;transition:box-shadow .2s}
-.nav-logo{display:flex;align-items:center;gap:.6rem;font-family:var(--fd);font-size:1.3rem;letter-spacing:-.02em;white-space:nowrap;flex-shrink:0}
-.nav-logo svg{width:36px;height:36px;flex-shrink:0}
-.nav-links{display:flex;list-style:none;margin-left:auto;gap:0}
-.nav-links a{display:block;padding:.4rem 1rem;font-size:.8rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;border:2px solid transparent;transition:all .12s}
-.nav-links a:hover{border-color:var(--ink);background:var(--ink);color:var(--cream)}
-.nav-cta{display:flex;gap:.6rem;flex-shrink:0}
+    /* BUTTONS */
+    .btn { display:inline-flex;align-items:center;gap:.4rem;padding:.65rem 1.35rem;font-family:var(--fb);font-size:.875rem;font-weight:700;border:var(--b);cursor:none;white-space:nowrap;transition:transform .15s,box-shadow .15s;letter-spacing:.01em; }
+    .btn:hover { transform:translate(-2px,-2px);box-shadow:var(--sm); }
+    .btn:active { transform:none;box-shadow:none; }
+    .ghost { background:transparent; }
+    .fill { background:var(--ink);color:var(--white);box-shadow:var(--ss); }
+    .fill:hover { box-shadow:var(--sm); }
+    .bor { background:var(--orange);color:var(--white);box-shadow:var(--ss); }
+    .bor:hover { box-shadow:var(--sm); }
+    .yel { background:var(--yellow);color:var(--ink);box-shadow:var(--ss); }
+    .xl { padding:.95rem 2rem;font-size:1rem; }
+    .mag { display:inline-flex; }
 
-/* BUTTONS */
-.btn{display:inline-flex;align-items:center;gap:.4rem;padding:.68rem 1.55rem;font-family:var(--fd);font-size:.86rem;letter-spacing:.05em;text-transform:uppercase;border:var(--b);cursor:none;position:relative;transition:transform .12s,box-shadow .12s;will-change:transform}
-.btn-ink{background:var(--ink);color:var(--cream);box-shadow:var(--sh)}
-.btn-ink:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
-.btn-ghost{background:transparent;color:var(--ink);box-shadow:var(--sh)}
-.btn-ghost:hover{background:var(--ink);color:var(--cream);transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
-.btn-lime{background:var(--lime);color:var(--ink);box-shadow:var(--sh)}
-.btn-lime:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
-.btn-lg{padding:.95rem 2.1rem;font-size:.95rem}
-.btn-sm{padding:.4rem .9rem;font-size:.76rem}
+    /* HERO */
+    .hw { position:relative;min-height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center; }
+    #hc { position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0; }
+    .hero { position:relative;z-index:2;max-width:1320px;margin:0 auto;padding:140px 2.5rem 80px;display:grid;grid-template-columns:1.1fr 1fr;gap:3rem;align-items:center; }
+    .htag { display:inline-flex;align-items:center;gap:.5rem;background:var(--lime);color:var(--ink);padding:.35rem .85rem;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:var(--b);box-shadow:var(--ss);margin-bottom:1.5rem; }
+    .hh1 { font-family:var(--fd);font-size:clamp(2.4rem,4.5vw,4.8rem);font-weight:900;line-height:1;letter-spacing:-.04em;margin-bottom:1.5rem; }
+    .hh1 .out { -webkit-text-stroke:3px var(--ink);color:transparent; }
+    .hh1 .org { color:var(--orange); }
+    .hp { font-size:1.05rem;color:var(--mid);line-height:1.7;max-width:500px;margin-bottom:2.25rem; }
+    .hbtns { display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2.5rem; }
+    .hproof { display:flex;gap:0;border:var(--b);box-shadow:var(--ss); }
+    .pi { flex:1;padding:1rem 1.25rem;text-align:center;border-right:var(--b1); }
+    .pi:last-child { border-right:none; }
+    .pn { font-family:var(--fd);font-size:1.6rem;font-weight:900;color:var(--orange);line-height:1; }
+    .pl { font-size:.7rem;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.06em;margin-top:.25rem; }
 
-/* HERO */
-#hero{min-height:100vh;padding-top:68px;position:relative;overflow:hidden;display:flex;align-items:center}
-#three-canvas{position:absolute;inset:0;z-index:0;pointer-events:none}
-.hero-inner{position:relative;z-index:2;max-width:1240px;margin:0 auto;padding:4rem 2rem 3rem;display:grid;grid-template-columns:1fr 420px;gap:4rem;align-items:center}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:.6rem;border:var(--b);padding:.32rem .85rem;background:var(--lime);font-size:.73rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;box-shadow:3px 3px 0 var(--ink);margin-bottom:1.5rem}
-.hero-h1{font-family:var(--fd);font-size:clamp(3.6rem,7.5vw,7.5rem);line-height:.93;letter-spacing:-.03em;margin-bottom:1.7rem}
-.hero-h1 .ln{display:block;overflow:hidden}
-.hero-h1 .stroke{-webkit-text-stroke:3px var(--ink);color:transparent}
-.hero-h1 .purple{color:var(--purple)}
-.hero-sub{font-size:1.08rem;line-height:1.65;max-width:485px;margin-bottom:2.4rem;opacity:.8}
-.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem}
-.hero-note{font-size:.76rem;opacity:.48;font-weight:600;letter-spacing:.04em}
+    /* OCTOPUS */
+    .ow { position:relative;display:flex;justify-content:center;align-items:center; }
+    .og { position:absolute;width:90%;height:90%;background:var(--orange);border-radius:50%;filter:blur(80px);opacity:.1;animation:breathe 5s ease-in-out infinite; }
+    @keyframes breathe { 0%,100%{transform:scale(1);opacity:.1}50%{transform:scale(1.15);opacity:.18} }
+    .osv { position:relative;z-index:1;width:100%;max-width:480px;animation:hov 7s ease-in-out infinite;filter:drop-shadow(6px 6px 0 rgba(0,0,0,.12)); }
+    @keyframes hov { 0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-18px) rotate(1.5deg)} }
+    .chip { position:absolute;background:var(--white);border:var(--b);box-shadow:var(--ss);padding:.45rem .8rem;font-size:.72rem;font-weight:700;display:flex;align-items:center;gap:.35rem;animation:chipf 5s ease-in-out infinite; }
+    .ca { top:8%;right:4%;animation-delay:0s; }
+    .cb { bottom:22%;left:-2%;animation-delay:1.8s; }
+    .cc { top:52%;right:-4%;animation-delay:3.2s; }
+    @keyframes chipf { 0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)} }
 
-.mascot-wrap{position:relative;display:flex;justify-content:center;align-items:center}
-.mascot-box{width:380px;height:415px;border:var(--b5);background:var(--paper);box-shadow:var(--sh8);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.mascot-box::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 18px,rgba(26,18,9,.023) 18px,rgba(26,18,9,.023) 36px)}
-.mascot-box svg{width:315px;height:350px;position:relative;z-index:1}
-.mpip{position:absolute;border:var(--b);padding:.42rem .78rem;font-family:var(--fd);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;box-shadow:3px 3px 0 var(--ink);white-space:nowrap}
+    /* TICKER */
+    .ticker { background:var(--ink);color:var(--white);padding:.85rem 0;overflow:hidden;border-top:var(--b);border-bottom:var(--b); }
+    .tt { display:flex;gap:2rem;white-space:nowrap;animation:tick 28s linear infinite; }
+    .tt:hover { animation-play-state:paused; }
+    @keyframes tick { from{transform:translateX(0)}to{transform:translateX(-50%)} }
+    .ti { display:flex;align-items:center;gap:.6rem;font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;flex-shrink:0; }
+    .td { width:5px;height:5px;border-radius:50%;background:var(--orange);flex-shrink:0; }
 
-.hero-stats{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,1fr);border:var(--b5);box-shadow:var(--sh8);background:var(--paper);margin-top:.5rem}
-.h-stat{padding:1.35rem 1.7rem;border-right:var(--b);display:flex;flex-direction:column;gap:.22rem}
-.h-stat:last-child{border-right:none}
-.h-stat .num{font-family:var(--fd);font-size:clamp(1.7rem,2.6vw,2.5rem);letter-spacing:-.04em;line-height:1}
-.h-stat .lbl{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.48}
+    /* SECTIONS */
+    .sec { padding:5rem 2.5rem; }
+    .si { max-width:1200px;margin:0 auto; }
+    .sbadge { display:inline-block;background:var(--yellow);color:var(--ink);padding:.3rem .7rem;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:var(--b);margin-bottom:1rem; }
+    .sh { font-family:var(--fd);font-size:clamp(1.8rem,3vw,2.8rem);font-weight:900;line-height:1.05;letter-spacing:-.03em;margin-bottom:.85rem; }
+    .sp { font-size:1rem;color:var(--mid);line-height:1.7;max-width:580px; }
+    .shdr { margin-bottom:3rem; }
 
-/* TICKER */
-.ticker{border-top:var(--b5);border-bottom:var(--b5);background:var(--ink);overflow:hidden;padding:.68rem 0}
-.ticker-tr{display:flex;animation:tk 28s linear infinite;width:max-content}
-.ticker:hover .ticker-tr{animation-play-state:paused}
-.tk{display:inline-flex;align-items:center;gap:.85rem;padding:0 1.8rem;font-family:var(--fd);font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--cream);white-space:nowrap}
-.tkd{width:5px;height:5px;border-radius:50%;flex-shrink:0}
-@keyframes tk{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    /* FEATURES */
+    .fg { display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem; }
+    .fc { padding:2rem;border:var(--b);box-shadow:var(--ss);background:var(--white);transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden; }
+    .fc::after { content:'';position:absolute;bottom:0;left:0;right:0;height:3px; }
+    .fc:nth-child(1)::after{background:var(--orange)}.fc:nth-child(2)::after{background:var(--blue)}.fc:nth-child(3)::after{background:var(--lime)}
+    .fc:nth-child(4)::after{background:var(--violet)}.fc:nth-child(5)::after{background:var(--cyan)}.fc:nth-child(6)::after{background:var(--yellow)}
+    .fc:hover { transform:translate(-3px,-3px);box-shadow:var(--sm); }
+    .fi { width:46px;height:46px;font-size:1.4rem;border:var(--b);display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem;box-shadow:var(--ss); }
+    .ft { font-family:var(--fd);font-size:.9rem;font-weight:700;margin-bottom:.65rem;letter-spacing:-.01em; }
+    .fx { font-size:.875rem;color:var(--mid);line-height:1.65; }
 
-/* SECTION */
-.sec{padding:6rem 2rem}
-.sec-in{max-width:1240px;margin:0 auto}
-.sec-tag{display:inline-flex;align-items:center;gap:.45rem;border:2px solid var(--ink);padding:.26rem .78rem;font-size:.7rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.2rem}
-.sec-h2{font-family:var(--fd);font-size:clamp(2.3rem,5vw,4.4rem);line-height:.97;letter-spacing:-.03em;margin-bottom:.9rem}
-.sec-sub{font-size:1.02rem;line-height:1.65;opacity:.7;max-width:555px}
-.stroke-h{-webkit-text-stroke:2px var(--ink);color:transparent}
+    /* HOW IT WORKS */
+    .hiw { background:var(--ink);color:var(--white); }
+    .hiw .sh { color:var(--white); }
+    .hiw .sp { color:rgba(255,255,255,.5); }
+    .hiw .sbadge { background:var(--orange);border-color:rgba(255,255,255,.2); }
+    .steps { display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem; }
+    .step { padding:2rem;border:1px solid rgba(255,255,255,.15);transition:border-color .25s,background .25s; }
+    .step:hover { border-color:var(--orange);background:rgba(255,46,0,.06); }
+    .snum { font-family:var(--fd);font-size:3.5rem;font-weight:900;color:var(--orange);line-height:1;margin-bottom:1rem; }
+    .sttl { font-family:var(--fd);font-size:1rem;font-weight:700;margin-bottom:.65rem; }
+    .stxt { font-size:.875rem;color:rgba(255,255,255,.5);line-height:1.65; }
 
-/* FEATURES */
-.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);border:var(--b5);box-shadow:var(--sh8);margin-top:3.5rem}
-.fc{padding:2.2rem;background:var(--paper);border-right:var(--b);border-bottom:var(--b);transition:background .14s,color .14s;position:relative;overflow:hidden}
-.fc:nth-child(3n){border-right:none}
-.fc:nth-last-child(-n+3){border-bottom:none}
-.fc:hover{background:var(--ink);color:var(--cream)}
-.fc-ico{width:46px;height:46px;border:var(--b);display:flex;align-items:center;justify-content:center;font-size:1.35rem;margin-bottom:1.2rem;background:var(--cream);transition:background .14s,border-color .14s}
-.fc:hover .fc-ico{background:var(--lime);border-color:var(--lime)}
-.fc-t{font-family:var(--fd);font-size:1.12rem;letter-spacing:-.01em;margin-bottom:.65rem}
-.fc-d{font-size:.87rem;line-height:1.6;opacity:.7}
-.fc:hover .fc-d{opacity:.82}
-.fc::after{content:attr(data-n);position:absolute;bottom:.8rem;right:1.1rem;font-family:var(--fd);font-size:4rem;letter-spacing:-.05em;opacity:.04;line-height:1;transition:opacity .14s}
-.fc:hover::after{opacity:.09;color:var(--cream)}
+    /* STATS */
+    .sband { background:var(--orange);border-top:var(--b);border-bottom:var(--b); }
+    .srow { display:grid;grid-template-columns:repeat(4,1fr); }
+    .sb2 { padding:2.5rem 1.5rem;text-align:center;border-right:2px solid rgba(0,0,0,.15); }
+    .sb2:last-child { border-right:none; }
+    .sn { font-family:var(--fd);font-size:clamp(2rem,3.5vw,3.2rem);font-weight:900;color:var(--white);line-height:1;margin-bottom:.4rem; }
+    .sl2 { font-size:.75rem;font-weight:700;color:rgba(255,255,255,.75);text-transform:uppercase;letter-spacing:.08em; }
 
-/* HOW IT WORKS */
-#how{background:var(--ink);color:var(--cream)}
-.hiw-grid{display:grid;grid-template-columns:repeat(3,1fr);border:3px solid rgba(255,248,232,.17);margin-top:3.5rem}
-.hiw-step{padding:2.8rem 2.2rem;border-right:3px solid rgba(255,248,232,.17);transition:background .14s}
-.hiw-step:last-child{border-right:none}
-.hiw-step:hover{background:rgba(255,248,232,.04)}
-.hiw-n{font-family:var(--fd);font-size:5rem;line-height:1;letter-spacing:-.06em;opacity:.12;margin-bottom:.5rem}
-.hiw-bar{width:34px;height:4px;margin-bottom:1.2rem}
-.hiw-t{font-family:var(--fd);font-size:1.45rem;letter-spacing:-.02em;margin-bottom:.8rem}
-.hiw-d{font-size:.9rem;line-height:1.65;opacity:.62}
+    /* PRICING */
+    .pbg { background:var(--off); }
+    .pgrid { display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;align-items:start; }
+    .pc { padding:2.25rem 2rem;border:var(--b);box-shadow:var(--ss);background:var(--white);position:relative; }
+    .pc.pop { background:var(--ink);color:var(--white);box-shadow:var(--so);transform:scale(1.04); }
+    .ppip { position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--orange);color:var(--white);border:var(--b);padding:.2rem .75rem;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap; }
+    .ptier { font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);margin-bottom:.6rem; }
+    .pc.pop .ptier { color:var(--lime); }
+    .pamt { font-family:var(--fd);font-size:2.4rem;font-weight:900;margin-bottom:.2rem; }
+    .pper { font-size:.85rem;color:var(--mid);margin-bottom:1.25rem; }
+    .pc.pop .pper { color:rgba(255,255,255,.5); }
+    .pdiv { height:1px;background:var(--line);margin-bottom:1.25rem; }
+    .pc.pop .pdiv { background:rgba(255,255,255,.15); }
+    .plist { list-style:none;display:flex;flex-direction:column;gap:.5rem;margin-bottom:2rem; }
+    .plist li { display:flex;gap:.6rem;font-size:.875rem;align-items:flex-start; }
+    .plist li::before { content:'✓';color:var(--orange);font-weight:900;flex-shrink:0; }
+    .pc.pop .plist li::before { color:var(--lime); }
 
-/* WHO */
-.tab-bar{display:flex;border:var(--b5);box-shadow:var(--sh8)}
-.tab-btn{flex:1;padding:1.05rem 1rem;font-family:var(--fd);font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;border:none;border-right:var(--b);background:var(--paper);cursor:none;transition:background .12s,color .12s;text-align:center}
-.tab-btn:last-child{border-right:none}
-.tab-btn.active{background:var(--ink);color:var(--cream)}
-.tab-btn:not(.active):hover{background:var(--cream)}
-.tab-panels{border:var(--b5);border-top:none;box-shadow:var(--sh8)}
-.tab-panel{display:none;padding:3rem;background:var(--paper)}
-.tab-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
-.tp-tag{display:inline-block;padding:.26rem .72rem;font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border:2px solid var(--ink);margin-bottom:.9rem}
-.tp-h3{font-family:var(--fd);font-size:2.3rem;letter-spacing:-.03em;line-height:1;margin-bottom:.9rem}
-.tp-p{font-size:.93rem;line-height:1.65;opacity:.7;margin-bottom:1.4rem}
-.tp-ul{list-style:none;display:flex;flex-direction:column;gap:.65rem}
-.tp-ul li{display:flex;align-items:center;gap:.7rem;font-size:.88rem;font-weight:600}
-.tp-ul li::before{content:'';width:17px;height:17px;flex-shrink:0;border:2px solid var(--ink);background:var(--lime)}
-.tp-card{border:var(--b5);box-shadow:var(--sh8);background:var(--cream);overflow:hidden}
-.tp-ch{padding:.85rem 1.15rem;border-bottom:var(--b);display:flex;align-items:center;gap:.5rem;font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
-.tp-cdot{width:9px;height:9px;border-radius:50%;border:2px solid var(--ink)}
-.tp-cb{padding:1.4rem}
-.tp-big{font-family:var(--fd);font-size:2.3rem;letter-spacing:-.04em;line-height:1;margin-bottom:.22rem}
-.tp-lbl{font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;opacity:.48}
+    /* TESTIMONIALS */
+    .tscroll { overflow:hidden; }
+    .ttrack { display:flex;gap:1.5rem;animation:scrt 32s linear infinite;width:max-content; }
+    .ttrack:hover { animation-play-state:paused; }
+    @keyframes scrt { from{transform:translateX(0)}to{transform:translateX(-50%)} }
+    .tc { width:330px;flex-shrink:0;padding:1.75rem;border:var(--b);box-shadow:var(--ss);background:var(--white); }
+    .tst { color:var(--orange);font-size:1rem;letter-spacing:3px;margin-bottom:.85rem; }
+    .tq { font-size:.875rem;line-height:1.7;color:var(--mid);margin-bottom:1.25rem; }
+    .tw { display:flex;align-items:center;gap:.65rem; }
+    .tav { width:38px;height:38px;border:var(--b);background:var(--off);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.85rem; }
+    .tn { font-weight:700;font-size:.85rem; }
+    .tr2 { font-size:.72rem;color:var(--mid); }
 
-/* STATS */
-#stats{background:var(--purple);color:#fff}
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);border:3px solid rgba(255,255,255,.24);margin-top:3rem}
-.sc{padding:2.4rem 2rem;text-align:center;border-right:3px solid rgba(255,255,255,.24)}
-.sc:last-child{border-right:none}
-.sc-big{font-family:var(--fd);font-size:clamp(2.8rem,5.5vw,5rem);letter-spacing:-.05em;line-height:1;margin-bottom:.35rem}
-.sc-suf{color:var(--lime)}
-.sc-lbl{font-size:.76rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.62}
+    /* FAQ */
+    .fbg { background:var(--off); }
+    .flay { display:grid;grid-template-columns:1fr 1.2fr;gap:4rem;align-items:start; }
+    .fitems { display:flex;flex-direction:column; }
+    .frow { border:var(--b);border-bottom:none; }
+    .frow:last-child { border-bottom:var(--b); }
+    .fq { padding:1.15rem 1.5rem;background:var(--white);display:flex;justify-content:space-between;align-items:center;gap:1rem;cursor:none;font-weight:700;font-size:.9rem;transition:background .2s; }
+    .fq:hover { background:var(--off); }
+    .fq.open { background:var(--ink);color:var(--white); }
+    .fq .ico { font-size:1.1rem;transition:transform .25s;flex-shrink:0; }
+    .fq.open .ico { transform:rotate(45deg); }
+    .fa { display:none;padding:1rem 1.5rem;font-size:.875rem;color:var(--mid);line-height:1.7;background:var(--white);border-top:1px solid var(--line); }
+    .fa.show { display:block; }
 
-/* PRICING */
-.price-grid{display:grid;grid-template-columns:repeat(3,1fr);border:var(--b5);box-shadow:var(--sh8);margin-top:3.5rem}
-.pc{padding:2.4rem;border-right:var(--b);background:var(--paper);display:flex;flex-direction:column}
-.pc:last-child{border-right:none}
-.pc.feat{background:var(--ink);color:var(--cream)}
-.pc-badge{display:inline-flex;align-items:center;padding:.24rem .62rem;font-size:.66rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border:2px solid var(--lime);background:var(--lime);color:var(--ink);margin-bottom:1.2rem;align-self:flex-start}
-.pc-tier{font-family:var(--fd);font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;opacity:.48;margin-bottom:.75rem}
-.pc-amt{font-family:var(--fd);font-size:clamp(2rem,3.5vw,3rem);letter-spacing:-.04em;line-height:1;margin-bottom:.28rem}
-.pc-per{font-size:.76rem;opacity:.52;margin-bottom:1.9rem}
-.pc-ul{list-style:none;flex:1;display:flex;flex-direction:column;gap:.65rem;margin-bottom:1.9rem}
-.pc-ul li{display:flex;align-items:flex-start;gap:.55rem;font-size:.86rem;line-height:1.4}
-.pc-ul li::before{content:'→';font-weight:900;flex-shrink:0;color:var(--lime)}
-.pc:not(.feat) .pc-ul li::before{color:var(--purple)}
+    /* CTA */
+    .csec { background:var(--ink);color:var(--white);position:relative;overflow:hidden; }
+    .cglow { position:absolute;bottom:-150px;left:50%;transform:translateX(-50%);width:700px;height:700px;border-radius:50%;background:var(--orange);filter:blur(120px);opacity:.1;pointer-events:none; }
+    .cinn { position:relative;z-index:1;text-align:center; }
+    .cocto { font-size:5rem;margin-bottom:1.25rem;display:inline-block;animation:hov 7s ease-in-out infinite; }
+    .ch { font-family:var(--fd);font-size:clamp(1.8rem,3.5vw,3.2rem);font-weight:900;line-height:1.1;letter-spacing:-.03em;margin-bottom:1rem; }
+    .csub { font-size:1rem;color:rgba(255,255,255,.5);max-width:480px;margin:0 auto 2.25rem;line-height:1.7; }
+    .cform { display:flex;max-width:450px;margin:0 auto 1rem; }
+    .cin { flex:1;padding:.85rem 1.15rem;background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.2);border-right:none;color:var(--white);font-family:var(--fb);font-size:.9rem;outline:none; }
+    .cin:focus { border-color:var(--orange); }
+    .cin::placeholder { color:rgba(255,255,255,.35); }
+    .csb { padding:.85rem 1.5rem;background:var(--orange);color:var(--white);border:2px solid var(--orange);font-family:var(--fb);font-size:.9rem;font-weight:700;cursor:none;transition:background .2s; }
+    .csb:hover { background:var(--orange-l); }
+    .cnote { font-size:.75rem;color:rgba(255,255,255,.35); }
 
-/* TESTIMONIALS */
-#testi{background:var(--cream);border-top:var(--b5);border-bottom:var(--b5);overflow:hidden;padding:5rem 0}
-.testi-hdr{padding:0 2rem;max-width:1240px;margin:0 auto 3rem}
-.testi-tr{display:flex;gap:1.2rem;animation:tscroll 44s linear infinite;width:max-content}
-.testi-tr:hover{animation-play-state:paused}
-.tc{width:335px;flex-shrink:0;border:var(--b);padding:1.7rem;background:var(--paper);box-shadow:3px 3px 0 var(--ink)}
-.tc-stars{color:var(--orange);font-size:.82rem;margin-bottom:.9rem;letter-spacing:.1em}
-.tc-q{font-size:.88rem;line-height:1.65;opacity:.82;margin-bottom:1.35rem}
-.tc-au{display:flex;align-items:center;gap:.7rem}
-.tc-av{width:36px;height:36px;border:var(--b);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:.85rem;color:#fff;flex-shrink:0}
-.tc-n{font-weight:700;font-size:.86rem}
-.tc-r{font-size:.7rem;opacity:.52}
-@keyframes tscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    /* FOOTER */
+    footer { background:var(--ink);color:var(--white);padding:3.5rem 2.5rem 2rem;border-top:1px solid rgba(255,255,255,.08); }
+    .finn { max-width:1200px;margin:0 auto; }
+    .fgrid { display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:2.5rem;padding-bottom:2.5rem;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:1.5rem; }
+    .flogo { display:flex;align-items:center;gap:.6rem;font-family:var(--fd);font-weight:900;font-size:1rem;color:var(--white);margin-bottom:.85rem; }
+    .fdesc { font-size:.85rem;color:rgba(255,255,255,.4);line-height:1.65;margin-bottom:1.25rem; }
+    .fsoc { display:flex;gap:.6rem; }
+    .fsoc a { width:34px;height:34px;border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:.75rem;transition:border-color .2s; }
+    .fsoc a:hover { border-color:var(--orange); }
+    .fh { font-family:var(--fd);font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem; }
+    .flinks { list-style:none;display:flex;flex-direction:column;gap:.55rem; }
+    .flinks a { font-size:.85rem;color:rgba(255,255,255,.4);transition:color .2s; }
+    .flinks a:hover { color:var(--orange); }
+    .fbot { display:flex;justify-content:space-between;align-items:center;font-size:.78rem;color:rgba(255,255,255,.3); }
 
-/* FAQ */
-#faq{background:var(--cream);padding:6rem 2rem}
-.faq-inner{max-width:820px;margin:0 auto}
-.faq-hdr{margin-bottom:3.2rem}
-.fi{border:var(--b);border-bottom:none;background:var(--paper)}
-.fi:last-child{border-bottom:var(--b)}
-.fq{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1.35rem 1.45rem;cursor:none;user-select:none;font-family:var(--fd);font-size:.97rem;letter-spacing:-.01em}
-.ftog{width:25px;height:25px;border:var(--b);display:flex;align-items:center;justify-content:center;font-size:1.05rem;flex-shrink:0;background:var(--cream);transition:background .12s,color .12s}
-.fi.open .ftog{background:var(--ink);color:var(--cream)}
-.fa{overflow:hidden;height:0}
-.fa-in{padding:0 1.45rem 1.35rem;font-size:.88rem;line-height:1.7;opacity:.7;border-top:1px solid rgba(26,18,9,.08);padding-top:.95rem}
+    /* INTEGRATIONS */
+    .igrid { display:grid;grid-template-columns:repeat(6,1fr);gap:1rem; }
+    .ii { padding:1.15rem .75rem;border:2px solid var(--line);text-align:center;font-size:.72rem;font-weight:700;color:var(--mid);transition:border-color .2s,box-shadow .2s,transform .2s,color .2s; }
+    .ii:hover { border-color:var(--ink);box-shadow:var(--ss);transform:translate(-2px,-2px);color:var(--ink); }
+    .iico { font-size:1.4rem;margin-bottom:.4rem; }
 
-/* CTA */
-#cta{background:var(--ink);color:var(--cream);padding:8rem 2rem;text-align:center;position:relative;overflow:hidden}
-.cta-in{position:relative;z-index:2;max-width:740px;margin:0 auto}
-.cta-ey{font-size:.73rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;opacity:.38;margin-bottom:1.4rem}
-.cta-h2{font-family:var(--fd);font-size:clamp(2.8rem,7vw,6.5rem);letter-spacing:-.04em;line-height:.93;margin-bottom:1.65rem}
-.cta-h2 .cta-stroke{-webkit-text-stroke:2px var(--cream);color:transparent}
-.cta-sub{font-size:1.02rem;opacity:.58;margin-bottom:2.6rem;max-width:460px;margin-left:auto;margin-right:auto}
-.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
-.cta-deco{position:absolute;font-family:var(--fd);font-size:18rem;letter-spacing:-.06em;opacity:.025;line-height:1;pointer-events:none;user-select:none;color:var(--cream)}
-.cta-dl{top:-3rem;left:-2rem}
-.cta-dr{bottom:-4rem;right:-2rem}
+    /* REVEAL */
+    .rv { opacity:0;transform:translateY(32px); }
+    .sg2 { opacity:0;transform:translateY(20px); }
 
-/* FOOTER */
-footer{background:var(--cream);border-top:var(--b5);padding:4rem 2rem 2rem}
-.ft-in{max-width:1240px;margin:0 auto}
-.ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;padding-bottom:3rem;border-bottom:var(--b);margin-bottom:2rem}
-.ft-brand p{font-size:.86rem;line-height:1.65;opacity:.58;margin-top:.85rem;max-width:265px}
-.ft-col h4{font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;opacity:.42;margin-bottom:1.2rem}
-.ft-col ul{list-style:none;display:flex;flex-direction:column;gap:.65rem}
-.ft-col a{font-size:.86rem;font-weight:600;opacity:.7;transition:opacity .12s}
-.ft-col a:hover{opacity:1}
-.ft-bot{display:flex;justify-content:space-between;align-items:center;font-size:.76rem;opacity:.42}
-
-/* RESPONSIVE */
-@media(max-width:900px){
-  .nav-links{display:none}
-  .hero-inner{grid-template-columns:1fr;text-align:center;padding:2rem 1.25rem}
-  .hero-sub,.hero-note{margin-left:auto;margin-right:auto}
-  .hero-btns{justify-content:center}
-  .mascot-box{width:300px;height:330px;margin:0 auto}
-  .mascot-box svg{width:245px;height:270px}
-  .hero-stats{grid-template-columns:repeat(2,1fr)}
-  .h-stat:nth-child(2){border-right:none}
-  .h-stat:nth-child(3){border-top:var(--b)}
-  .feat-grid,.hiw-grid,.stats-grid,.price-grid{grid-template-columns:1fr}
-  .fc:nth-child(3n){border-right:var(--b)}
-  .fc:nth-last-child(-n+3){border-bottom:var(--b)}
-  .fc:last-child{border-bottom:none}
-  .hiw-step{border-right:none;border-bottom:3px solid rgba(255,248,232,.17)}
-  .hiw-step:last-child{border-bottom:none}
-  .sc{border-right:none;border-bottom:3px solid rgba(255,255,255,.24)}
-  .sc:last-child{border-bottom:none}
-  .tab-panel.active{grid-template-columns:1fr}
-  .ft-grid{grid-template-columns:1fr 1fr}
-  .pc{border-right:none;border-bottom:var(--b)}
-  .pc:last-child{border-bottom:none}
-}
-@media(max-width:600px){
-  .tab-bar{flex-wrap:wrap}
-  .tab-btn{border-bottom:var(--b);min-width:50%}
-  .ft-grid{grid-template-columns:1fr}
-}
-</style>
+    /* RESPONSIVE */
+    @media (max-width:1024px) {
+      .hero { grid-template-columns:1fr;text-align:center; }
+      .hp, .hbtns { margin-left:auto;margin-right:auto; }
+      .hbtns { justify-content:center; }
+      .ow { margin-top:2rem; }
+      .fg { grid-template-columns:repeat(2,1fr); }
+      .pgrid { grid-template-columns:1fr;max-width:380px;margin:0 auto; }
+      .pc.pop { transform:none; }
+      .fgrid { grid-template-columns:1fr 1fr; }
+      .igrid { grid-template-columns:repeat(3,1fr); }
+      .steps { grid-template-columns:1fr; }
+      .flay { grid-template-columns:1fr; }
+    }
+    @media (max-width:640px) {
+      .sec { padding:3.5rem 1.25rem; }
+      nav { padding:.875rem 1.25rem; }
+      .hero { padding:100px 1.25rem 60px; }
+      .nl { display:none; }
+      .fg { grid-template-columns:1fr; }
+      .srow { grid-template-columns:repeat(2,1fr); }
+      .fgrid { grid-template-columns:1fr; }
+      .igrid { grid-template-columns:repeat(2,1fr); }
+    }
+  </style>
 </head>
 <body>
-<div class="noise" aria-hidden="true"></div>
-<div class="cur" id="cur-d"><div id="cd"></div></div>
-<div class="cur" id="cur-r"><div id="cr"></div></div>
 
-<!-- NAV -->
-<nav id="nav">
-  <div class="nav-logo">
-    <svg viewBox="0 0 36 36" fill="none">
-      <ellipse cx="18" cy="15" rx="10" ry="11" fill="#fffcf4" stroke="#1a1209" stroke-width="2.5"/>
-      <circle cx="13.5" cy="13" r="2.6" fill="#1a1209"/>
-      <circle cx="22.5" cy="13" r="2.6" fill="#1a1209"/>
-      <circle cx="12.8" cy="12.2" r=".85" fill="white"/>
-      <circle cx="21.8" cy="12.2" r=".85" fill="white"/>
-      <path d="M14 19 Q18 22 22 19" stroke="#1a1209" stroke-width="2" stroke-linecap="round" fill="none"/>
-      <path d="M9 23 C6 26 7 31 9 35" stroke="#1a1209" stroke-width="2" stroke-linecap="round" fill="none"/>
-      <path d="M13 25 C12 29 12.5 33 13 36" stroke="#1a1209" stroke-width="2" stroke-linecap="round" fill="none"/>
-      <path d="M17 26 C16.5 30 17 34 17.5 36" stroke="#1a1209" stroke-width="2" stroke-linecap="round" fill="none"/>
-      <path d="M19 26 C19.5 30 19 34 18.5 36" stroke="#1a1209" stroke-width="2" stroke-linecap="round" fill="none"/>
-      <path d="M23 25 C24 29 23.5 33 23 36" stroke="#1a1209" stroke-width="2" stroke-linecap="round" fill="none"/>
-      <path d="M27 23 C30 26 29 31 27 35" stroke="#1a1209" stroke-width="2" stroke-linecap="round" fill="none"/>
-    </svg>
-    AFF STARTER
-  </div>
-  <ul class="nav-links">
-    <li><a href="#features">Features</a></li>
-    <li><a href="#how">How it Works</a></li>
-    <li><a href="#who">Who it's For</a></li>
-    <li><a href="#pricing">Pricing</a></li>
-  </ul>
-  <div class="nav-cta">
-    <a href="#" class="btn btn-ghost btn-sm">Log In</a>
-    <a href="#" class="btn btn-ink btn-sm">Get Started →</a>
-  </div>
-</nav>
+  <div id="cdot"></div>
+  <div id="cring"></div>
 
-<!-- HERO -->
-<section id="hero">
-  <canvas id="three-canvas"></canvas>
-  <div class="hero-inner">
-    <div class="hero-copy">
-      <div class="hero-eyebrow">🐙 The affiliate platform for streamers &amp; brands</div>
-      <h1 class="hero-h1">
-        <span class="ln">BOOK.</span>
-        <span class="ln stroke">TRACK.</span>
-        <span class="ln purple">PAY.</span>
-      </h1>
-      <p class="hero-sub">Connect iGaming brands with streamers, affiliates, and agencies. Secure crypto escrow via Dexpay, real-time KPI tracking, and transparent deals — all in one platform.</p>
-      <div class="hero-btns">
-        <a href="#" class="btn btn-lime btn-lg">Start for free →</a>
-        <a href="#" class="btn btn-ghost btn-lg">Watch demo ▶</a>
-      </div>
-      <p class="hero-note">★ Free plan available — no credit card required</p>
+  <!-- NAV -->
+  <nav id="mn">
+    <a href="#" class="nb">
+      <svg viewBox="0 0 80 80" fill="none">
+        <ellipse cx="40" cy="30" rx="22" ry="20" fill="#ff2e00" stroke="#0d0d0d" stroke-width="3.5"/>
+        <circle cx="32" cy="26" r="5.5" fill="#0d0d0d"/><circle cx="48" cy="26" r="5.5" fill="#0d0d0d"/>
+        <circle cx="33.5" cy="24.5" r="2.2" fill="white"/><circle cx="49.5" cy="24.5" r="2.2" fill="white"/>
+        <path d="M18 46 Q14 58 20 68" stroke="#ff2e00" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <path d="M27 50 Q22 62 26 72" stroke="#ff2e00" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <path d="M37 52 Q36 64 40 74" stroke="#ff2e00" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <path d="M47 52 Q48 64 44 74" stroke="#ff2e00" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <path d="M57 50 Q62 62 58 72" stroke="#ff2e00" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <path d="M63 46 Q70 56 65 68" stroke="#ff2e00" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <path d="M32 37 Q40 44 48 37" stroke="#0d0d0d" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+      </svg>
+      aff-starter
+    </a>
+    <ul class="nl">
+      <li><a href="#platform">Platform</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#integrations">Integrations</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <div class="nc">
+      <a href="#" class="btn ghost">Log in</a>
+      <a href="#pricing" class="btn bor mag">Get Started →</a>
     </div>
-    <div class="mascot-wrap">
-      <div class="mascot-box" id="mascot-box">
-        <!-- OCTOPUS MASCOT SVG -->
-        <svg viewBox="0 0 310 345" fill="none" xmlns="http://www.w3.org/2000/svg" id="octo">
-          <!-- Crown -->
-          <path d="M78 72 L93 48 L111 68 L128 40 L155 68 L182 40 L199 68 L217 48 L232 72" fill="#c7ff4d" stroke="#1a1209" stroke-width="4" stroke-linejoin="round"/>
-          <circle cx="111" cy="56" r="5.5" fill="#a855f7" stroke="#1a1209" stroke-width="2.5"/>
-          <circle cx="155" cy="50" r="6.5" fill="#ff4fa3" stroke="#1a1209" stroke-width="2.5"/>
-          <circle cx="199" cy="56" r="5.5" fill="#60d7ff" stroke="#1a1209" stroke-width="2.5"/>
-          <!-- Body -->
-          <ellipse cx="155" cy="148" rx="88" ry="96" fill="#fffcf4" stroke="#1a1209" stroke-width="4.5"/>
-          <!-- Body texture -->
-          <circle cx="130" cy="108" r="3" fill="#1a1209" opacity=".07"/>
-          <circle cx="155" cy="98" r="3.5" fill="#1a1209" opacity=".065"/>
-          <circle cx="180" cy="108" r="3" fill="#1a1209" opacity=".07"/>
-          <circle cx="142" cy="120" r="2.5" fill="#1a1209" opacity=".055"/>
-          <circle cx="168" cy="120" r="2.5" fill="#1a1209" opacity=".055"/>
-          <!-- Left eye -->
-          <circle cx="120" cy="148" r="26" fill="white" stroke="#1a1209" stroke-width="4.5"/>
-          <circle cx="120" cy="148" r="17" fill="#1a1209"/>
-          <circle cx="114" cy="141" r="5.5" fill="white"/>
-          <circle cx="126" cy="143" r="2.8" fill="white"/>
-          <!-- Right eye -->
-          <circle cx="190" cy="148" r="26" fill="white" stroke="#1a1209" stroke-width="4.5"/>
-          <circle cx="190" cy="148" r="17" fill="#1a1209"/>
-          <circle cx="184" cy="141" r="5.5" fill="white"/>
-          <circle cx="196" cy="143" r="2.8" fill="white"/>
-          <!-- Eyebrows -->
-          <path d="M98 127 L138 118" stroke="#1a1209" stroke-width="5" stroke-linecap="round"/>
-          <path d="M172 118 L212 127" stroke="#1a1209" stroke-width="5" stroke-linecap="round"/>
-          <!-- Blush -->
-          <ellipse cx="100" cy="162" rx="13" ry="7.5" fill="#ff4fa3" opacity=".32"/>
-          <ellipse cx="210" cy="162" rx="13" ry="7.5" fill="#ff4fa3" opacity=".32"/>
-          <!-- Mouth -->
-          <path d="M128 182 Q155 200 182 182" stroke="#1a1209" stroke-width="4.5" stroke-linecap="round" fill="none"/>
-          <path d="M133 186 Q155 197 177 186" fill="white"/>
-          <!-- Heart -->
-          <path d="M148 200 C148 197 143 193 143 197 C143 202 148 206 148 206 C148 206 153 202 153 197 C153 193 148 197 148 200Z" fill="#ff4fa3" stroke="#1a1209" stroke-width="2"/>
-          <!-- 8 Tentacles -->
-          <path id="t1" d="M72 220 C50 238 38 265 44 302 C46 318 38 330 30 340" stroke="#1a1209" stroke-width="6" stroke-linecap="round" fill="none"/>
-          <circle cx="46" cy="285" r="5.5" fill="none" stroke="#1a1209" stroke-width="2.8"/>
-          <circle cx="37" cy="316" r="4.5" fill="none" stroke="#1a1209" stroke-width="2.8"/>
-          <path id="t2" d="M96 232 C80 258 76 288 82 318 C84 332 78 342 73 345" stroke="#1a1209" stroke-width="6" stroke-linecap="round" fill="none"/>
-          <circle cx="80" cy="298" r="5.5" fill="none" stroke="#1a1209" stroke-width="2.8"/>
-          <path id="t3" d="M122 240 C112 268 112 300 118 328 C120 340 118 345 116 345" stroke="#1a1209" stroke-width="6" stroke-linecap="round" fill="none"/>
-          <circle cx="116" cy="308" r="5" fill="none" stroke="#1a1209" stroke-width="2.8"/>
-          <path id="t4" d="M142 244 C136 272 136 304 141 330 C143 342 142 345 141 345" stroke="#1a1209" stroke-width="6" stroke-linecap="round" fill="none"/>
-          <path id="t5" d="M168 244 C174 272 174 304 169 330 C167 342 168 345 169 345" stroke="#1a1209" stroke-width="6" stroke-linecap="round" fill="none"/>
-          <path id="t6" d="M188 240 C198 268 198 300 192 328 C190 340 192 345 194 345" stroke="#1a1209" stroke-width="6" stroke-linecap="round" fill="none"/>
-          <circle cx="194" cy="308" r="5" fill="none" stroke="#1a1209" stroke-width="2.8"/>
-          <path id="t7" d="M214 232 C230 258 234 288 228 318 C226 332 232 342 237 345" stroke="#1a1209" stroke-width="6" stroke-linecap="round" fill="none"/>
-          <circle cx="230" cy="298" r="5.5" fill="none" stroke="#1a1209" stroke-width="2.8"/>
-          <path id="t8" d="M238 220 C260 238 272 265 266 302 C264 318 272 330 280 340" stroke="#1a1209" stroke-width="6" stroke-linecap="round" fill="none"/>
-          <circle cx="264" cy="285" r="5.5" fill="none" stroke="#1a1209" stroke-width="2.8"/>
-          <circle cx="273" cy="316" r="4.5" fill="none" stroke="#1a1209" stroke-width="2.8"/>
-        </svg>
-      </div>
-      <div class="mpip" style="top:-14px;right:-22px;background:var(--purple);color:white;transform:rotate(2.5deg)">🔐 Escrow Active</div>
-      <div class="mpip" style="bottom:16px;left:-26px;background:var(--lime);color:var(--ink);transform:rotate(-2deg)">+$2.4M Paid Out</div>
-      <div class="mpip" style="top:48%;left:-32px;transform:translateY(-50%) rotate(-1.5deg);background:var(--paper)">⚡ Live KPIs</div>
-    </div>
-    <div class="hero-stats">
-      <div class="h-stat"><span class="num"><span class="cnt" data-to="5000">0</span>+</span><span class="lbl">Active Creators</span></div>
-      <div class="h-stat"><span class="num">$<span class="cnt" data-to="2.4" data-dec="1">0</span>M+</span><span class="lbl">Paid via Escrow</span></div>
-      <div class="h-stat"><span class="num"><span class="cnt" data-to="3200">0</span>+</span><span class="lbl">Deals Closed</span></div>
-      <div class="h-stat"><span class="num"><span class="cnt" data-to="98">0</span>%</span><span class="lbl">Payout Success</span></div>
-    </div>
-  </div>
-</section>
+  </nav>
 
-<!-- TICKER -->
-<div class="ticker">
-  <div class="ticker-tr">
-    <span class="tk"><span class="tkd" style="background:#c7ff4d"></span>iGaming Brands</span>
-    <span class="tk"><span class="tkd" style="background:#a855f7"></span>Creator Bookings</span>
-    <span class="tk"><span class="tkd" style="background:#60d7ff"></span>Streamer Deals</span>
-    <span class="tk"><span class="tkd" style="background:#ff7a1a"></span>Campaign KPIs</span>
-    <span class="tk"><span class="tkd" style="background:#ff4fa3"></span>Crypto Escrow</span>
-    <span class="tk"><span class="tkd" style="background:#c7ff4d"></span>Affiliate Networks</span>
-    <span class="tk"><span class="tkd" style="background:#a855f7"></span>Verified Campaigns</span>
-    <span class="tk"><span class="tkd" style="background:#60d7ff"></span>Live Tracking</span>
-    <span class="tk"><span class="tkd" style="background:#ff7a1a"></span>Instant Payouts</span>
-    <span class="tk"><span class="tkd" style="background:#c7ff4d"></span>iGaming Brands</span>
-    <span class="tk"><span class="tkd" style="background:#a855f7"></span>Creator Bookings</span>
-    <span class="tk"><span class="tkd" style="background:#60d7ff"></span>Streamer Deals</span>
-    <span class="tk"><span class="tkd" style="background:#ff7a1a"></span>Campaign KPIs</span>
-    <span class="tk"><span class="tkd" style="background:#ff4fa3"></span>Crypto Escrow</span>
-    <span class="tk"><span class="tkd" style="background:#c7ff4d"></span>Affiliate Networks</span>
-    <span class="tk"><span class="tkd" style="background:#a855f7"></span>Verified Campaigns</span>
-    <span class="tk"><span class="tkd" style="background:#60d7ff"></span>Live Tracking</span>
-    <span class="tk"><span class="tkd" style="background:#ff7a1a"></span>Instant Payouts</span>
-  </div>
-</div>
-
-<!-- FEATURES -->
-<section class="sec" id="features">
-  <div class="sec-in">
-    <div style="margin-bottom:3.2rem">
-      <div class="sec-tag">★ Platform Features</div>
-      <h2 class="sec-h2">Six pillars.<br><span class="stroke-h">Zero fluff.</span></h2>
-      <p class="sec-sub">Built for the real complexity of affiliate and streaming deals — every feature earned its place.</p>
-    </div>
-    <div class="feat-grid">
-      <div class="fc" data-n="01"><div class="fc-ico">🔐</div><h3 class="fc-t">Crypto Escrow</h3><p class="fc-d">Funds locked via Dexpay until KPIs are confirmed. No more chasing payment after campaign delivery.</p></div>
-      <div class="fc" data-n="02"><div class="fc-ico">📊</div><h3 class="fc-t">Real-Time KPIs</h3><p class="fc-d">Track clicks, viewers, conversions, and revenue the moment they happen. Automatic milestone verification.</p></div>
-      <div class="fc" data-n="03"><div class="fc-ico">🎮</div><h3 class="fc-t">Streamer Bookings</h3><p class="fc-d">Full booking lifecycle — request, negotiate, confirm, deliver, and settle, all in one seamless flow.</p></div>
-      <div class="fc" data-n="04"><div class="fc-ico">🤝</div><h3 class="fc-t">Affiliate Network</h3><p class="fc-d">Intro deals vs. performance deals. Smart link tracking, sub-affiliate support, and tiered commissions.</p></div>
-      <div class="fc" data-n="05"><div class="fc-ico">🏢</div><h3 class="fc-t">Agency Roster</h3><p class="fc-d">Manage an entire creator roster from one dashboard. Act on behalf of streamers, batch bookings, pooled payouts.</p></div>
-      <div class="fc" data-n="06"><div class="fc-ico">⚡</div><h3 class="fc-t">Billing &amp; Tiers</h3><p class="fc-d">Subscription tiers with promo codes, social add-ons, and full audit trails. Finance-grade record keeping.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="sec" id="how">
-  <div class="sec-in">
-    <div class="sec-tag" style="border-color:rgba(255,248,232,.28);color:rgba(255,248,232,.65)">✦ Process</div>
-    <h2 class="sec-h2" style="color:var(--cream)">Three steps.<br><span style="-webkit-text-stroke:2px var(--cream);color:transparent">Real results.</span></h2>
-    <div class="hiw-grid">
-      <div class="hiw-step"><div class="hiw-n">01</div><div class="hiw-bar" style="background:var(--lime)"></div><h3 class="hiw-t">Set up your profile</h3><p class="hiw-d">Brand, streamer, affiliate, or agency — create your profile in minutes. Verify your channels, set your rates, and define your campaign focus.</p></div>
-      <div class="hiw-step"><div class="hiw-n">02</div><div class="hiw-bar" style="background:var(--purple)"></div><h3 class="hiw-t">Match &amp; agree terms</h3><p class="hiw-d">Brands post campaigns or reach out directly. Negotiate deliverables, KPIs, and payment. Escrow is funded before work begins — protecting both sides.</p></div>
-      <div class="hiw-step"><div class="hiw-n">03</div><div class="hiw-bar" style="background:var(--orange)"></div><h3 class="hiw-t">Deliver &amp; get paid</h3><p class="hiw-d">Run your campaign, track performance live, and trigger automatic crypto payouts when milestones hit. Disputes resolved fairly if needed.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- WHO IT'S FOR -->
-<section class="sec" id="who">
-  <div class="sec-in">
-    <div style="margin-bottom:2.8rem">
-      <div class="sec-tag">◈ Built For</div>
-      <h2 class="sec-h2">One platform.<br><span class="stroke-h">Every player.</span></h2>
-    </div>
-    <div class="tab-bar">
-      <button class="tab-btn active" data-p="brands">🏷️ Brands</button>
-      <button class="tab-btn" data-p="streamers">🎮 Streamers</button>
-      <button class="tab-btn" data-p="affiliates">🔗 Affiliates</button>
-      <button class="tab-btn" data-p="agencies">👥 Agencies</button>
-    </div>
-    <div class="tab-panels">
-      <div class="tab-panel active" id="pb">
-        <div><div class="tp-tag" style="background:var(--purple);color:white">For Brands</div><h3 class="tp-h3">Campaigns that actually convert.</h3><p class="tp-p">iGaming operators — access vetted streamers with genuine gambling audiences. Set KPIs, fund escrow, and watch performance in real time.</p><ul class="tp-ul"><li>Streamer marketplace with verified audiences</li><li>Campaign brief builder with KPI targets</li><li>Escrow-protected milestone payments</li><li>Real-time conversion tracking</li><li>Multi-creator campaign management</li></ul><a href="#" class="btn btn-ink" style="margin-top:1.65rem">Start as a Brand →</a></div>
-        <div><div class="tp-card"><div class="tp-ch"><div class="tp-cdot" style="background:var(--lime)"></div>Campaign Live — Day 12</div><div class="tp-cb"><div class="tp-big" style="color:var(--purple)">$31,840</div><div class="tp-lbl">Revenue attributed this month</div><div style="margin-top:1.4rem;height:62px;display:flex;align-items:flex-end;gap:5px"><div style="height:35%;flex:1;background:var(--purple);opacity:.18;border:1px solid var(--ink)"></div><div style="height:52%;flex:1;background:var(--purple);opacity:.28;border:1px solid var(--ink)"></div><div style="height:68%;flex:1;background:var(--purple);opacity:.44;border:1px solid var(--ink)"></div><div style="height:83%;flex:1;background:var(--purple);opacity:.58;border:1px solid var(--ink)"></div><div style="height:100%;flex:1;background:var(--purple);border:1px solid var(--ink)"></div><div style="height:76%;flex:1;background:var(--purple);opacity:.68;border:1px solid var(--ink)"></div><div style="height:92%;flex:1;background:var(--purple);opacity:.84;border:1px solid var(--ink)"></div></div></div></div></div>
-      </div>
-      <div class="tab-panel" id="ps">
-        <div><div class="tp-tag" style="background:var(--blue);color:var(--ink)">For Streamers</div><h3 class="tp-h3">Turn your stream into a business.</h3><p class="tp-p">Get iGaming brand deals that fit your content. Crypto payouts, live KPI tracking, and native campaign integrations built for the streaming world.</p><ul class="tp-ul"><li>Inbound brand deal inbox</li><li>Live viewer click &amp; conversion tracking</li><li>KPI verification with proof upload</li><li>Crypto payouts via Dexpay</li><li>Booking calendar &amp; scheduling</li></ul><a href="#" class="btn btn-ink" style="margin-top:1.65rem">Start as a Streamer →</a></div>
-        <div><div class="tp-card"><div class="tp-ch"><div class="tp-cdot" style="background:var(--blue)"></div>🔴 LIVE — 6,204 viewers</div><div class="tp-cb"><div class="tp-big" style="color:var(--blue)">$1,240</div><div class="tp-lbl">Earned this session</div><div style="margin-top:1.2rem;padding:.8rem;border:2px solid var(--ink);background:var(--cream);font-size:.8rem;font-weight:600">🎮 CasinoBrand overlay — 342 clicks · 28 sign-ups</div><div style="margin-top:.7rem;display:flex;justify-content:space-between;align-items:center;font-size:.76rem"><span style="opacity:.52">Escrow funded</span><span style="color:var(--lime);font-weight:800;border:2px solid var(--lime);padding:.18rem .5rem">✓ LOCKED</span></div></div></div></div>
-      </div>
-      <div class="tab-panel" id="pa">
-        <div><div class="tp-tag" style="background:var(--lime);color:var(--ink)">For Affiliates</div><h3 class="tp-h3">Your links. Your rules.</h3><p class="tp-p">Build a portfolio of iGaming brand relationships, track every referral, and get paid automatically. Intro deals and performance deals — all transparent.</p><ul class="tp-ul"><li>Smart affiliate link management</li><li>Intro vs. deal commission tracking</li><li>Sub-affiliate &amp; partner network</li><li>Automated invoice generation</li><li>Performance-based rate boosts</li></ul><a href="#" class="btn btn-ink" style="margin-top:1.65rem">Start as an Affiliate →</a></div>
-        <div><div class="tp-card"><div class="tp-ch"><div class="tp-cdot" style="background:var(--lime)"></div>Affiliate Dashboard</div><div class="tp-cb"><div class="tp-big">$14,820</div><div class="tp-lbl">This month's earnings</div><div style="margin-top:1.2rem;font-size:.8rem"><div style="display:flex;justify-content:space-between;padding:.45rem 0;border-bottom:1px solid rgba(26,18,9,.08)"><span>CasinoX intro deal</span><span style="font-weight:800;color:var(--purple)">+$5,400</span></div><div style="display:flex;justify-content:space-between;padding:.45rem 0;border-bottom:1px solid rgba(26,18,9,.08)"><span>SlotBrand performance</span><span style="font-weight:800;color:var(--purple)">+$6,200</span></div><div style="display:flex;justify-content:space-between;padding:.45rem 0"><span>PokerCo sub-aff</span><span style="font-weight:800;color:var(--purple)">+$3,220</span></div></div></div></div></div>
-      </div>
-      <div class="tab-panel" id="pag">
-        <div><div class="tp-tag" style="background:var(--orange);color:white">For Agencies</div><h3 class="tp-h3">Scale without the chaos.</h3><p class="tp-p">Manage your entire streamer roster from one dashboard. Act on behalf of creators, handle bulk bookings, pool payouts, and deliver white-label reports.</p><ul class="tp-ul"><li>Multi-streamer roster management</li><li>Act-on-behalf booking controls</li><li>Pooled payout management</li><li>White-label reporting</li><li>Dispute handling &amp; mediation</li></ul><a href="#" class="btn btn-ink" style="margin-top:1.65rem">Start as an Agency →</a></div>
-        <div><div class="tp-card"><div class="tp-ch"><div class="tp-cdot" style="background:var(--orange)"></div>Agency Overview</div><div class="tp-cb"><div class="tp-big" style="color:var(--orange)">62</div><div class="tp-lbl">Active streamers on roster</div><div style="margin-top:1.2rem;display:grid;grid-template-columns:1fr 1fr;gap:.7rem"><div style="border:2px solid var(--ink);padding:.7rem;text-align:center"><div style="font-family:'Archivo Black',sans-serif;font-size:1.3rem">18</div><div style="font-size:.66rem;opacity:.52;text-transform:uppercase;letter-spacing:.06em">Live Bookings</div></div><div style="border:2px solid var(--ink);padding:.7rem;text-align:center"><div style="font-family:'Archivo Black',sans-serif;font-size:1.3rem">$118k</div><div style="font-size:.66rem;opacity:.52;text-transform:uppercase;letter-spacing:.06em">Monthly</div></div></div></div></div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- STATS -->
-<section class="sec" id="stats">
-  <div class="sec-in">
-    <div class="sec-tag" style="border-color:rgba(255,255,255,.28);color:rgba(255,255,255,.7)">◆ Numbers</div>
-    <h2 class="sec-h2" style="color:white">Trust built<br><span style="-webkit-text-stroke:2px white;color:transparent">on receipts.</span></h2>
-    <div class="stats-grid">
-      <div class="sc"><div class="sc-big"><span class="cnt2" data-to="5000">0</span><span class="sc-suf">+</span></div><div class="sc-lbl">Active Creators</div></div>
-      <div class="sc"><div class="sc-big"><span class="sc-suf">$</span><span class="cnt2" data-to="2.4" data-dec="1">0</span><span class="sc-suf">M+</span></div><div class="sc-lbl">Paid via Escrow</div></div>
-      <div class="sc"><div class="sc-big"><span class="cnt2" data-to="3200">0</span><span class="sc-suf">+</span></div><div class="sc-lbl">Deals Closed</div></div>
-      <div class="sc"><div class="sc-big"><span class="cnt2" data-to="98">0</span><span class="sc-suf">%</span></div><div class="sc-lbl">Payout Success</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section class="sec" id="pricing">
-  <div class="sec-in">
-    <div class="sec-tag">◈ Pricing</div>
-    <h2 class="sec-h2">Simple pricing.<br><span class="stroke-h">No surprises.</span></h2>
-    <p class="sec-sub">Start free, scale when ready. Every plan includes crypto escrow and real-time tracking.</p>
-    <div class="price-grid">
-      <div class="pc"><div class="pc-tier">Starter</div><div class="pc-amt">Free</div><div class="pc-per">Forever — no credit card</div><ul class="pc-ul"><li>Up to 3 active deals</li><li>Basic analytics dashboard</li><li>Escrow on deals up to $1,000</li><li>Creator or brand profile</li><li>Email support</li></ul><a href="#" class="btn btn-ghost" style="width:100%;justify-content:center">Get Started Free →</a></div>
-      <div class="pc feat"><div class="pc-badge">Most Popular</div><div class="pc-tier">Pro</div><div class="pc-amt">$49</div><div class="pc-per">/month, billed annually</div><ul class="pc-ul"><li>Unlimited active deals</li><li>Advanced analytics + exports</li><li>Unlimited escrow amounts</li><li>Priority deal matching</li><li>Custom rate cards</li><li>API access</li><li>Priority support</li></ul><a href="#" class="btn btn-lime" style="width:100%;justify-content:center">Start Pro Trial →</a></div>
-      <div class="pc"><div class="pc-tier">Agency</div><div class="pc-amt">$199</div><div class="pc-per">/month per workspace</div><ul class="pc-ul"><li>Everything in Pro</li><li>Multi-creator roster</li><li>Act-on-behalf controls</li><li>White-label reports</li><li>Dedicated account manager</li><li>Custom SLA &amp; contracts</li><li>Reduced 3.5% escrow fee</li></ul><a href="#" class="btn btn-ghost" style="width:100%;justify-content:center">Talk to Sales →</a></div>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section id="testi">
-  <div class="testi-hdr">
-    <div class="sec-tag">★ Community</div>
-    <h2 class="sec-h2">Straight from the<br><span class="stroke-h">roster.</span></h2>
-  </div>
-  <div style="overflow:hidden">
-    <div class="testi-tr">
-      <div class="tc"><div class="tc-stars">★★★★★</div><p class="tc-q">"Escrow changed everything. I used to lose 20% of deals to non-payment. Now I haven't had a single dispute go unresolved. The platform just works."</p><div class="tc-au"><div class="tc-av" style="background:var(--purple)">JR</div><div><div class="tc-n">Jake R.</div><div class="tc-r">Casino Streamer — 280k Twitch followers</div></div></div></div>
-      <div class="tc"><div class="tc-stars">★★★★★</div><p class="tc-q">"We ran 12 streamer campaigns in Q1. AFF Starter had better attribution data than any tool we'd tried. ROI jumped 40% vs our previous setup."</p><div class="tc-au"><div class="tc-av" style="background:var(--orange)">SM</div><div><div class="tc-n">Sarah M.</div><div class="tc-r">Growth Lead — iGaming Operator</div></div></div></div>
-      <div class="tc"><div class="tc-stars">★★★★★</div><p class="tc-q">"My agency manages 40+ streamers. The roster dashboard alone saved us 15 hours per week. Bulk booking and pooled payouts are genuinely game-changing."</p><div class="tc-au"><div class="tc-av" style="background:var(--lime);color:var(--ink)">TC</div><div><div class="tc-n">Tom C.</div><div class="tc-r">Founder — StreamForce Agency</div></div></div></div>
-      <div class="tc"><div class="tc-stars">★★★★★</div><p class="tc-q">"The crypto payout via Dexpay hits my wallet within hours of KPI verification. No more waiting 30 days. My cash flow has completely transformed."</p><div class="tc-au"><div class="tc-av" style="background:var(--blue);color:var(--ink)">KL</div><div><div class="tc-n">Kim L.</div><div class="tc-r">IRL Streamer &amp; Affiliate — 95k subs</div></div></div></div>
-      <div class="tc"><div class="tc-stars">★★★★★</div><p class="tc-q">"Doubled my affiliate revenue in 4 months. The intro vs. deal tracking finally made it clear which brand relationships were actually worth my time."</p><div class="tc-au"><div class="tc-av" style="background:var(--pink)">AK</div><div><div class="tc-n">Alex K.</div><div class="tc-r">iGaming Affiliate — $20k/month</div></div></div></div>
-      <div class="tc"><div class="tc-stars">★★★★★</div><p class="tc-q">"Escrow changed everything. I used to lose 20% of deals to non-payment. Now I haven't had a single dispute go unresolved. The platform just works."</p><div class="tc-au"><div class="tc-av" style="background:var(--purple)">JR</div><div><div class="tc-n">Jake R.</div><div class="tc-r">Casino Streamer — 280k Twitch followers</div></div></div></div>
-      <div class="tc"><div class="tc-stars">★★★★★</div><p class="tc-q">"We ran 12 streamer campaigns in Q1. AFF Starter had better attribution data than any tool we'd tried. ROI jumped 40% vs our previous setup."</p><div class="tc-au"><div class="tc-av" style="background:var(--orange)">SM</div><div><div class="tc-n">Sarah M.</div><div class="tc-r">Growth Lead — iGaming Operator</div></div></div></div>
-      <div class="tc"><div class="tc-stars">★★★★★</div><p class="tc-q">"My agency manages 40+ streamers. The roster dashboard alone saved us 15 hours per week. Bulk booking and pooled payouts are genuinely game-changing."</p><div class="tc-au"><div class="tc-av" style="background:var(--lime);color:var(--ink)">TC</div><div><div class="tc-n">Tom C.</div><div class="tc-r">Founder — StreamForce Agency</div></div></div></div>
-      <div class="tc"><div class="tc-stars">★★★★★</div><p class="tc-q">"The crypto payout via Dexpay hits my wallet within hours of KPI verification. No more waiting 30 days. My cash flow has completely transformed."</p><div class="tc-au"><div class="tc-av" style="background:var(--blue);color:var(--ink)">KL</div><div><div class="tc-n">Kim L.</div><div class="tc-r">IRL Streamer &amp; Affiliate — 95k subs</div></div></div></div>
-      <div class="tc"><div class="tc-stars">★★★★★</div><p class="tc-q">"Doubled my affiliate revenue in 4 months. The intro vs. deal tracking finally made it clear which brand relationships were actually worth my time."</p><div class="tc-au"><div class="tc-av" style="background:var(--pink)">AK</div><div><div class="tc-n">Alex K.</div><div class="tc-r">iGaming Affiliate — $20k/month</div></div></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section id="faq">
-  <div class="faq-inner">
-    <div class="faq-hdr">
-      <div class="sec-tag">? FAQ</div>
-      <h2 class="sec-h2">Questions?<br><span class="stroke-h">Answered.</span></h2>
-    </div>
-    <div class="fi"><div class="fq"><span>How does the crypto escrow work?</span><div class="ftog">+</div></div><div class="fa"><div class="fa-in">When a deal is agreed, the brand deposits the agreed amount into secure escrow via Dexpay. Funds are held until the creator delivers and KPIs are verified. Once confirmed, funds release automatically to the creator's wallet. If there's a dispute, our admin team mediates — protecting both parties throughout.</div></div></div>
-    <div class="fi"><div class="fq"><span>What's the difference between an intro deal and a performance deal?</span><div class="ftog">+</div></div><div class="fa"><div class="fa-in">An intro deal pays a flat fee for the affiliate introducing a brand to a creator — a one-time finder's fee. A performance deal pays ongoing commissions based on the traffic, sign-ups, or revenue the affiliate drives. Both are tracked transparently on the platform.</div></div></div>
-    <div class="fi"><div class="fq"><span>How quickly are payouts processed?</span><div class="ftog">+</div></div><div class="fa"><div class="fa-in">Once KPIs are verified, escrow release is automatic. Dexpay transfers typically settle within 1–4 hours depending on network congestion. You choose your payout wallet during onboarding — crypto only for escrow payouts, with fiat conversion support available via our partners.</div></div></div>
-    <div class="fi"><div class="fq"><span>What percentage does AFF Starter take?</span><div class="ftog">+</div></div><div class="fa"><div class="fa-in">A flat 5% transaction fee on completed deals, taken from the escrow release. Agency plans drop to 3.5%. No hidden fees, no monthly charges on the free tier, and no charges if a deal falls through before escrow release.</div></div></div>
-    <div class="fi"><div class="fq"><span>Is AFF Starter only for iGaming brands?</span><div class="ftog">+</div></div><div class="fa"><div class="fa-in">Our core focus is iGaming and crypto brands, which is where our verified creator network is strongest. However, the platform works for any brand that wants to run streamer campaigns or affiliate programs. Our compliance tools are specifically optimized for regulated gambling markets.</div></div></div>
-    <div class="fi"><div class="fq"><span>How does dispute resolution work?</span><div class="ftog">+</div></div><div class="fa"><div class="fa-in">Either party can open a dispute from their dashboard. Our admin team reviews campaign deliverables, KPI evidence, and communication history within 48 hours. The decision is binding — escrow is either released, partially released, or refunded. Less than 2% of deals ever reach formal dispute.</div></div></div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section id="cta">
-  <div class="cta-deco cta-dl">🐙</div>
-  <div class="cta-deco cta-dr">🐙</div>
-  <div class="cta-in">
-    <div class="cta-ey">Ready to start?</div>
-    <h2 class="cta-h2">Your next deal<br>is <span class="cta-stroke">waiting.</span></h2>
-    <p class="cta-sub">Join 5,000+ creators and brands who've found a better way to work together. Free to start, powerful to scale.</p>
-    <div class="cta-btns">
-      <a href="#" class="btn btn-lime btn-lg">Get Started Free →</a>
-      <a href="#" class="btn btn-lg" style="border-color:rgba(255,248,232,.35);color:var(--cream)">Book a Demo</a>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="ft-in">
-    <div class="ft-grid">
-      <div class="ft-brand">
-        <div class="nav-logo" style="font-size:1.15rem">
-          <svg viewBox="0 0 36 36" fill="none" style="width:28px;height:28px">
-            <ellipse cx="18" cy="15" rx="10" ry="11" fill="#fffcf4" stroke="#1a1209" stroke-width="2.5"/>
-            <circle cx="13.5" cy="13" r="2.6" fill="#1a1209"/><circle cx="22.5" cy="13" r="2.6" fill="#1a1209"/>
-            <path d="M9 23 C6 26 7 31 9 35" stroke="#1a1209" stroke-width="2" stroke-linecap="round" fill="none"/>
-            <path d="M13 25 C12 29 12.5 33 13 36" stroke="#1a1209" stroke-width="2" stroke-linecap="round" fill="none"/>
-            <path d="M17 26 C16.5 30 17 34 17.5 36" stroke="#1a1209" stroke-width="2" stroke-linecap="round" fill="none"/>
-            <path d="M19 26 C19.5 30 19 34 18.5 36" stroke="#1a1209" stroke-width="2" stroke-linecap="round" fill="none"/>
-            <path d="M23 25 C24 29 23.5 33 23 36" stroke="#1a1209" stroke-width="2" stroke-linecap="round" fill="none"/>
-            <path d="M27 23 C30 26 29 31 27 35" stroke="#1a1209" stroke-width="2" stroke-linecap="round" fill="none"/>
-          </svg>
-          AFF STARTER
+  <!-- HERO -->
+  <div class="hw">
+    <canvas id="hc"></canvas>
+    <div class="hero">
+      <div>
+        <div class="htag">🐙 The iGaming Growth Platform</div>
+        <h1 class="hh1">
+          <span class="hw2">Book</span><br>
+          <span class="hw2 out">Streamers.</span><br>
+          <span class="hw2 org">Own</span><br>
+          <span class="hw2 out">Affiliates.</span>
+        </h1>
+        <p class="hp">The end-to-end platform for iGaming brands — book Twitch, Kick &amp; YouTube streamers for sponsored campaigns, manage affiliate networks, and pay everyone in crypto escrow.</p>
+        <div class="hbtns">
+          <a href="#pricing" class="btn bor xl mag">Start Your Trial</a>
+          <a href="#how" class="btn ghost xl mag">See How It Works →</a>
         </div>
-        <p>The affiliate platform built for iGaming brands, streamers, agencies, and affiliates. Secure. Transparent. Built to pay.</p>
+        <div class="hproof">
+          <div class="pi"><div class="pn">400+</div><div class="pl">Active Brands</div></div>
+          <div class="pi"><div class="pn">2,500+</div><div class="pl">Listed Streamers</div></div>
+          <div class="pi"><div class="pn">USDT/USDC</div><div class="pl">Crypto Escrow</div></div>
+        </div>
       </div>
-      <div class="ft-col"><h4>Platform</h4><ul><li><a href="#features">Features</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#">Integrations</a></li><li><a href="#">API Docs</a></li><li><a href="#">Changelog</a></li></ul></div>
-      <div class="ft-col"><h4>Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Blog</a></li><li><a href="#">Careers</a></li><li><a href="#">Press</a></li></ul></div>
-      <div class="ft-col"><h4>Support</h4><ul><li><a href="#">Help Center</a></li><li><a href="#">Community</a></li><li><a href="#">Status</a></li><li><a href="#">Contact</a></li><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li></ul></div>
+
+      <!-- OCTOPUS -->
+      <div class="ow">
+        <div class="og"></div>
+        <svg class="osv" viewBox="0 0 460 520" fill="none">
+          <!-- Crown -->
+          <polygon points="230,52 205,78 215,62 230,75 245,62 255,78" fill="#ffe500" stroke="#0d0d0d" stroke-width="3.5" stroke-linejoin="round"/>
+          <rect x="205" y="77" width="50" height="17" fill="#ffe500" stroke="#0d0d0d" stroke-width="3.5"/>
+          <circle cx="213" cy="68" r="4.5" fill="#ff2e00"/>
+          <circle cx="230" cy="61" r="4.5" fill="#ff2e00"/>
+          <circle cx="247" cy="68" r="4.5" fill="#ff2e00"/>
+          <!-- Body -->
+          <ellipse cx="230" cy="195" rx="115" ry="108" fill="#ff2e00" stroke="#0d0d0d" stroke-width="4.5"/>
+          <ellipse cx="116" cy="208" rx="19" ry="26" fill="#ff2e00" stroke="#0d0d0d" stroke-width="4"/>
+          <ellipse cx="344" cy="208" rx="19" ry="26" fill="#ff2e00" stroke="#0d0d0d" stroke-width="4"/>
+          <!-- Body spots -->
+          <circle cx="198" cy="175" r="11" fill="#cc2500" opacity=".4"/>
+          <circle cx="248" cy="200" r="8" fill="#cc2500" opacity=".3"/>
+          <!-- Sunglasses -->
+          <rect x="154" y="163" width="52" height="36" fill="rgba(13,13,13,.88)" stroke="#0d0d0d" stroke-width="3.5"/>
+          <rect x="224" y="163" width="52" height="36" fill="rgba(13,13,13,.88)" stroke="#0d0d0d" stroke-width="3.5"/>
+          <rect x="206" y="176" width="18" height="8" fill="rgba(13,13,13,.6)" stroke="#0d0d0d" stroke-width="2"/>
+          <line x1="152" y1="177" x2="130" y2="167" stroke="#0d0d0d" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="278" y1="177" x2="300" y2="167" stroke="#0d0d0d" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="163" y1="170" x2="172" y2="175" stroke="rgba(255,255,255,.3)" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="233" y1="170" x2="242" y2="175" stroke="rgba(255,255,255,.3)" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Smile + blush -->
+          <path d="M196 228 Q230 252 264 228" stroke="#0d0d0d" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <ellipse cx="174" cy="222" rx="14" ry="9" fill="#ff8060" opacity=".5"/>
+          <ellipse cx="286" cy="222" rx="14" ry="9" fill="#ff8060" opacity=".5"/>
+          <!-- Tentacle 1 far-left (coin) -->
+          <path d="M115 278 C92 298 66 294 52 320 C38 346 56 370 44 396 C32 420 20 424 26 440 C78 428 74 400 82 378 C90 356 72 330 80 306 C88 282 100 270 118 258 Z" fill="#ff2e00" stroke="#0d0d0d" stroke-width="4"/>
+          <circle cx="83" cy="302" r="6" fill="#cc2500" stroke="#0d0d0d" stroke-width="2"/>
+          <circle cx="62" cy="327" r="5.5" fill="#cc2500" stroke="#0d0d0d" stroke-width="2"/>
+          <circle cx="50" cy="356" r="5" fill="#cc2500" stroke="#0d0d0d" stroke-width="2"/>
+          <circle cx="28" cy="444" r="20" fill="#ffe500" stroke="#0d0d0d" stroke-width="3"/>
+          <text x="28" y="451" text-anchor="middle" font-size="15" font-weight="900" fill="#0d0d0d" font-family="Arial">$</text>
+          <!-- Tentacle 2 -->
+          <path d="M145 294 C128 320 115 346 106 376 C97 406 104 430 96 452 C150 442 144 412 148 384 C152 354 164 330 178 306 Z" fill="#ff2e00" stroke="#0d0d0d" stroke-width="4"/>
+          <circle cx="128" cy="323" r="5.5" fill="#cc2500" stroke="#0d0d0d" stroke-width="2"/>
+          <circle cx="113" cy="354" r="5" fill="#cc2500" stroke="#0d0d0d" stroke-width="2"/>
+          <!-- Tentacle 3 center-left -->
+          <path d="M190 302 C184 330 180 358 176 386 C172 414 176 438 168 460 C220 450 216 422 218 396 C220 368 222 342 226 314 Z" fill="#ff2e00" stroke="#0d0d0d" stroke-width="4"/>
+          <circle cx="181" cy="332" r="5.5" fill="#cc2500" stroke="#0d0d0d" stroke-width="2"/>
+          <circle cx="176" cy="362" r="5" fill="#cc2500" stroke="#0d0d0d" stroke-width="2"/>
+          <!-- Tentacle 4 center-right -->
+          <path d="M270 302 C276 330 280 358 284 386 C288 414 284 438 292 460 C240 450 244 422 242 396 C240 368 238 342 234 314 Z" fill="#ff2e00" stroke="#0d0d0d" stroke-width="4"/>
+          <circle cx="279" cy="332" r="5.5" fill="#cc2500" stroke="#0d0d0d" stroke-width="2"/>
+          <circle cx="284" cy="362" r="5" fill="#cc2500" stroke="#0d0d0d" stroke-width="2"/>
+          <!-- Tentacle 5 right (play button) -->
+          <path d="M315 294 C332 320 345 346 354 376 C363 406 356 430 364 452 C310 442 316 412 312 384 C308 354 296 330 282 306 Z" fill="#ff2e00" stroke="#0d0d0d" stroke-width="4"/>
+          <circle cx="332" cy="323" r="5.5" fill="#cc2500" stroke="#0d0d0d" stroke-width="2"/>
+          <circle cx="347" cy="354" r="5" fill="#cc2500" stroke="#0d0d0d" stroke-width="2"/>
+          <rect x="346" y="438" width="32" height="24" fill="#0040ff" stroke="#0d0d0d" stroke-width="3"/>
+          <polygon points="353,443 353,456 366,449.5" fill="white"/>
+          <!-- Tentacle 6 far-right -->
+          <path d="M345 278 C368 298 394 294 408 320 C422 346 404 370 416 396 C428 420 440 424 434 440 C382 428 386 400 378 378 C370 356 388 330 380 306 C372 282 360 270 342 258 Z" fill="#ff2e00" stroke="#0d0d0d" stroke-width="4"/>
+          <circle cx="377" cy="302" r="6" fill="#cc2500" stroke="#0d0d0d" stroke-width="2"/>
+          <circle cx="398" cy="327" r="5.5" fill="#cc2500" stroke="#0d0d0d" stroke-width="2"/>
+          <circle cx="410" cy="356" r="5" fill="#cc2500" stroke="#0d0d0d" stroke-width="2"/>
+        </svg>
+        <div class="chip ca">🎮 2,500+ Streamers</div>
+        <div class="chip cb">₿ Crypto Escrow</div>
+        <div class="chip cc">📈 Live Analytics</div>
+      </div>
     </div>
-    <div class="ft-bot"><span>© 2026 AFF Starter / THE H.O.G. All rights reserved.</span><span>Built for the creator economy. 🐙</span></div>
   </div>
-</footer>
 
-<script>
-gsap.registerPlugin(ScrollTrigger);
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="tt">
+      <div class="ti"><span class="td"></span>Streamer Bookings</div>
+      <div class="ti"><span class="td"></span>Affiliate Management</div>
+      <div class="ti"><span class="td"></span>Crypto Escrow · USDT · USDC</div>
+      <div class="ti"><span class="td"></span>iGaming Brands</div>
+      <div class="ti"><span class="td"></span>Real-time Analytics</div>
+      <div class="ti"><span class="td"></span>TRC20 · ERC20 Networks</div>
+      <div class="ti"><span class="td"></span>Social Add-ons</div>
+      <div class="ti"><span class="td"></span>Dispute Resolution</div>
+      <div class="ti"><span class="td"></span>Twitch · Kick · YouTube</div>
+      <div class="ti"><span class="td"></span>Streamer Bookings</div>
+      <div class="ti"><span class="td"></span>Affiliate Management</div>
+      <div class="ti"><span class="td"></span>Crypto Escrow · USDT · USDC</div>
+      <div class="ti"><span class="td"></span>iGaming Brands</div>
+      <div class="ti"><span class="td"></span>Real-time Analytics</div>
+      <div class="ti"><span class="td"></span>TRC20 · ERC20 Networks</div>
+      <div class="ti"><span class="td"></span>Social Add-ons</div>
+      <div class="ti"><span class="td"></span>Dispute Resolution</div>
+      <div class="ti"><span class="td"></span>Twitch · Kick · YouTube</div>
+    </div>
+  </div>
 
-// ── CURSOR ──
-const cd=document.getElementById('cd'),cr=document.getElementById('cr');
-const dw=document.getElementById('cur-d'),rw=document.getElementById('cur-r');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;gsap.to(dw,{x:mx,y:my,duration:.08,ease:'none'});});
-(function flw(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;gsap.set(rw,{x:rx,y:ry});requestAnimationFrame(flw);})();
-document.querySelectorAll('a,button,.fc,.fq,.tab-btn').forEach(el=>{el.addEventListener('mouseenter',()=>cr.classList.add('big'));el.addEventListener('mouseleave',()=>cr.classList.remove('big'));});
+  <!-- FEATURES -->
+  <section class="sec" id="platform">
+    <div class="si">
+      <div class="shdr rv">
+        <span class="sbadge">Platform</span>
+        <h2 class="sh">One platform.<br>Every iGaming growth lever.</h2>
+        <p class="sp">Streamer sponsorships, affiliate networks, crypto escrow, and social media — built for casino operators who want to dominate their market.</p>
+      </div>
+      <div class="fg">
+        <div class="fc sg2"><div class="fi">🎮</div><h3 class="ft">Streamer Bookings</h3><p class="fx">Browse a curated directory of Twitch, Kick, and YouTube casino streamers. Book campaigns, set KPIs, and manage delivery — all in one workflow.</p></div>
+        <div class="fc sg2"><div class="fi">🤝</div><h3 class="ft">Affiliate Network</h3><p class="fx">Manage affiliate partners with traffic source tracking, SEO/PPC attribution, and automated intro-to-deal conversion. Platform-mediated commercial introductions included.</p></div>
+        <div class="fc sg2"><div class="fi">🔐</div><h3 class="ft">Crypto Escrow</h3><p class="fx">Campaign budgets held in USDT or USDC via Dexpay. Funds auto-release only on verified KPI delivery. Supports TRC20 and ERC20 networks.</p></div>
+        <div class="fc sg2"><div class="fi">📊</div><h3 class="ft">Live Analytics</h3><p class="fx">Real-time dashboards covering clicks, registrations, FTDs, and revenue per campaign. Export to any BI tool via REST API and webhooks.</p></div>
+        <div class="fc sg2"><div class="fi">📱</div><h3 class="ft">Social Add-ons</h3><p class="fx">Twitter/X and Telegram management as bolt-on packages. 30 posts/month, growth strategy, and promo distribution for your brand at scale.</p></div>
+        <div class="fc sg2"><div class="fi">⚖️</div><h3 class="ft">Dispute Resolution</h3><p class="fx">Built-in dispute workflow for booking conflicts. Admin-mediated resolution with full evidence management — protecting brands and streamers equally.</p></div>
+      </div>
+    </div>
+  </section>
 
-// ── THREE.JS HERO ──
-(function(){
-  const canvas=document.getElementById('three-canvas');
-  if(!canvas||typeof THREE==='undefined')return;
-  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
-  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-  const scene=new THREE.Scene();
-  const camera=new THREE.PerspectiveCamera(70,1,.1,1000);
-  camera.position.z=6;
-  function rsz(){const w=canvas.parentElement.clientWidth,h=canvas.parentElement.clientHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();}
-  rsz();window.addEventListener('resize',rsz);
-  // Particles
-  const N=800,pos=new Float32Array(N*3),vel=[];
-  for(let i=0;i<N;i++){pos[i*3]=(Math.random()-.5)*22;pos[i*3+1]=(Math.random()-.5)*14;pos[i*3+2]=(Math.random()-.5)*4;vel.push({x:(Math.random()-.5)*.006,y:(Math.random()-.5)*.006,o:Math.random()*Math.PI*2,s:.4+Math.random()*.8});}
-  const geo=new THREE.BufferGeometry();
-  geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
-  const pts=new THREE.Points(geo,new THREE.PointsMaterial({color:0x1a1209,size:.06,transparent:true,opacity:.32}));
-  scene.add(pts);
-  // Grid
-  const lp=[];for(let i=-5;i<=5;i++){lp.push(-12,i*1.4,-1,12,i*1.4,-1);lp.push(i*2.4,-7,-1,i*2.4,7,-1);}
-  const lgeo=new THREE.BufferGeometry();lgeo.setAttribute('position',new THREE.BufferAttribute(new Float32Array(lp),3));
-  scene.add(new THREE.LineSegments(lgeo,new THREE.LineBasicMaterial({color:0x1a1209,transparent:true,opacity:.038})));
-  let tRX=0,tRY=0;
-  document.addEventListener('mousemove',e=>{tRY=(e.clientX/innerWidth-.5)*.32;tRX=(e.clientY/innerHeight-.5)*.18;});
-  let t=0;
-  (function tick(){requestAnimationFrame(tick);t+=.008;
-    const p=geo.attributes.position.array;
-    for(let i=0;i<N;i++){const v=vel[i];p[i*3]+=v.x+Math.sin(t*v.s+v.o)*.002;p[i*3+1]+=v.y+Math.cos(t*v.s*.7+v.o)*.002;
-      if(p[i*3]>11)p[i*3]=-11;if(p[i*3]<-11)p[i*3]=11;if(p[i*3+1]>7)p[i*3+1]=-7;if(p[i*3+1]<-7)p[i*3+1]=7;}
-    geo.attributes.position.needsUpdate=true;
-    pts.rotation.y+=(tRY-pts.rotation.y)*.04;
-    pts.rotation.x+=(tRX-pts.rotation.x)*.04;
-    renderer.render(scene,camera);
+  <!-- HOW IT WORKS -->
+  <section class="sec hiw" id="how">
+    <div class="si">
+      <div class="shdr rv">
+        <span class="sbadge">Process</span>
+        <h2 class="sh">Up and running in hours, not months.</h2>
+        <p class="sp">Most brands complete their first booking within 24 hours of going live. Here's the full flow.</p>
+      </div>
+      <div class="steps">
+        <div class="step sg2">
+          <div class="snum">01</div>
+          <h3 class="sttl">Subscribe & Configure</h3>
+          <p class="stxt">Choose your tier, set up your brand profile, and define KPI targets and commission structures. Onboarding takes under an hour.</p>
+        </div>
+        <div class="step sg2">
+          <div class="snum">02</div>
+          <h3 class="sttl">Browse &amp; Book Streamers</h3>
+          <p class="stxt">Search the curated streamer directory, review channel metrics and commercial rates, and create booking requests with escrow funding in the same flow.</p>
+        </div>
+        <div class="step sg2">
+          <div class="snum">03</div>
+          <h3 class="sttl">Launch, Track &amp; Pay</h3>
+          <p class="stxt">Campaigns go live, streamers deliver, and you track FTDs and revenue in real-time. Crypto payouts auto-release when KPIs are verified.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="sband">
+    <div class="srow">
+      <div class="sb2"><div class="sn" data-t="400">400+</div><div class="sl2">iGaming Brands</div></div>
+      <div class="sb2"><div class="sn" data-t="2500">2,500+</div><div class="sl2">Streamer Partners</div></div>
+      <div class="sb2"><div class="sn dt">$50M+</div><div class="sl2">Escrowed to Date</div></div>
+      <div class="sb2"><div class="sn dt2">99.9%</div><div class="sl2">Platform Uptime</div></div>
+    </div>
+  </div>
+
+  <!-- INTEGRATIONS -->
+  <section class="sec" id="integrations">
+    <div class="si">
+      <div class="shdr rv" style="text-align:center">
+        <span class="sbadge">Integrations</span>
+        <h2 class="sh">Plugs into your existing stack.</h2>
+        <p class="sp" style="margin:0 auto">Works with the platforms and tools your team already uses — out of the box.</p>
+      </div>
+      <div class="igrid">
+        <div class="ii sg2"><div class="iico">📺</div>Twitch</div>
+        <div class="ii sg2"><div class="iico">🎯</div>Kick</div>
+        <div class="ii sg2"><div class="iico">▶️</div>YouTube</div>
+        <div class="ii sg2"><div class="iico">🐦</div>Twitter / X</div>
+        <div class="ii sg2"><div class="iico">✈️</div>Telegram</div>
+        <div class="ii sg2"><div class="iico">₿</div>Dexpay</div>
+        <div class="ii sg2"><div class="iico">🔗</div>TRC20</div>
+        <div class="ii sg2"><div class="iico">🔷</div>ERC20</div>
+        <div class="ii sg2"><div class="iico">📊</div>REST API</div>
+        <div class="ii sg2"><div class="iico">⚡</div>Webhooks</div>
+        <div class="ii sg2"><div class="iico">📈</div>Analytics Export</div>
+        <div class="ii sg2"><div class="iico">🧠</div>Humbl Data</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="sec pbg" id="pricing">
+    <div class="si">
+      <div class="shdr rv" style="text-align:center">
+        <span class="sbadge">Pricing</span>
+        <h2 class="sh">Choose your tier. Own your niche.</h2>
+        <p class="sp" style="margin:0 auto">Subscription tiers scale with your affiliate ambitions. Minimum terms ensure you have enough runway to see real results.</p>
+      </div>
+      <div class="pgrid">
+        <div class="pc sg2">
+          <div class="ptier">Aff Tester</div>
+          <div class="pamt">$2,000</div>
+          <div class="pper">/ month &middot; 2 month minimum &middot; one-time only</div>
+          <div class="pdiv"></div>
+          <ul class="plist">
+            <li>8 booking requests / month</li>
+            <li>5 affiliate sources / month</li>
+            <li>3 affiliate intros / month</li>
+            <li>Crypto escrow payments</li>
+            <li>Core analytics dashboard</li>
+            <li>Email &amp; chat support</li>
+          </ul>
+          <a href="#" class="btn ghost" style="width:100%;justify-content:center">Get Started</a>
+        </div>
+        <div class="pc pop sg2">
+          <div class="ppip">Most Popular</div>
+          <div class="ptier">Aff Starter</div>
+          <div class="pamt">$4,000</div>
+          <div class="pper">/ month &middot; 3 month minimum</div>
+          <div class="pdiv"></div>
+          <ul class="plist">
+            <li>20 booking requests / month</li>
+            <li>50 affiliate sources / month</li>
+            <li>10 affiliate intros / month</li>
+            <li>Crypto escrow + auto-payouts</li>
+            <li>Advanced analytics &amp; API export</li>
+            <li>Top-ups available (+$450/batch)</li>
+            <li>Humbl affiliate enrichment</li>
+            <li>Priority support</li>
+          </ul>
+          <a href="#" class="btn yel xl" style="width:100%;justify-content:center">Start Trial →</a>
+        </div>
+        <div class="pc sg2">
+          <div class="ptier">Aff Driver</div>
+          <div class="pamt">$6,000</div>
+          <div class="pper">/ month &middot; 3 month minimum</div>
+          <div class="pdiv"></div>
+          <ul class="plist">
+            <li>30 booking requests / month</li>
+            <li>80 affiliate sources / month</li>
+            <li>15 affiliate intros / month</li>
+            <li>Everything in Aff Starter</li>
+            <li>Top-ups at $375/batch</li>
+            <li>Dedicated account manager</li>
+            <li>Custom deal structures</li>
+            <li>Social add-on eligibility</li>
+          </ul>
+          <a href="#" class="btn fill" style="width:100%;justify-content:center">Talk to Sales</a>
+        </div>
+      </div>
+      <!-- Social add-ons note -->
+      <div class="rv" style="margin-top:2.5rem;padding:1.5rem 2rem;border:var(--b);box-shadow:var(--ss);background:var(--white);display:flex;flex-wrap:wrap;gap:1.5rem;align-items:flex-start">
+        <div>
+          <div style="font-family:var(--fd);font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem">Social Add-ons (bolt-on)</div>
+          <div style="display:flex;flex-wrap:wrap;gap:.5rem">
+            <span style="padding:.3rem .65rem;border:var(--b1);font-size:.75rem;font-weight:600">Twitter/X Mgmt — $1,500/mo</span>
+            <span style="padding:.3rem .65rem;border:var(--b1);font-size:.75rem;font-weight:600">Telegram Mgmt — $1,500/mo</span>
+            <span style="padding:.3rem .65rem;border:var(--b1);font-size:.75rem;font-weight:600">X + Telegram Bundle — $2,250/mo</span>
+            <span style="padding:.3rem .65rem;border:var(--b1);font-size:.75rem;font-weight:600">Social Driver (full) — $4,000/mo</span>
+            <span style="padding:.3rem .65rem;border:var(--b1);font-size:.75rem;font-weight:600">Discord Setup (one-time) — $1,000</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="sec" style="padding-bottom:0">
+    <div class="si">
+      <div class="shdr rv" style="text-align:center">
+        <span class="sbadge">Testimonials</span>
+        <h2 class="sh">Operators trust aff-starter.</h2>
+        <p class="sp" style="margin:0 auto">What iGaming brands say about booking streamers and managing affiliates on the platform.</p>
+      </div>
+    </div>
+  </section>
+  <div class="tscroll" style="padding-bottom:5rem">
+    <div class="ttrack">
+      <div class="tc"><div class="tst">★★★★★</div><p class="tq">"We booked 12 Twitch streamers in our first month. The escrow system is airtight — funds only release when KPIs are verified. No more payment disputes."</p><div class="tw"><div class="tav">RJ</div><div><div class="tn">Ryan J.</div><div class="tr2">CMO, ViperBet</div></div></div></div>
+      <div class="tc"><div class="tst">★★★★★</div><p class="tq">"The affiliate intro workflow changed everything. We went from manually emailing SEO partners to managing 40+ in one dashboard. Game changer."</p><div class="tw"><div class="tav">NK</div><div><div class="tn">Nina K.</div><div class="tr2">Head of Growth, ShadowCasino</div></div></div></div>
+      <div class="tc"><div class="tst">★★★★★</div><p class="tq">"USDT escrow is how it should always have been. Streamers get paid in crypto instantly after verification. Haven't had a dispute since going live."</p><div class="tw"><div class="tav">DM</div><div><div class="tn">Damian M.</div><div class="tr2">Affiliate Dir, NeonSlots</div></div></div></div>
+      <div class="tc"><div class="tst">★★★★★</div><p class="tq">"The Telegram add-on drove more organic traffic than our entire paid social budget. The team genuinely understands the casino affiliate space."</p><div class="tw"><div class="tav">TW</div><div><div class="tn">Tom W.</div><div class="tr2">Founder, CryptoKings.io</div></div></div></div>
+      <div class="tc"><div class="tst">★★★★★</div><p class="tq">"Upgraded from Aff Tester to Aff Starter in week 3. The ROI is there. 50 affiliate source slots is more than enough to scale what we're doing."</p><div class="tw"><div class="tav">SB</div><div><div class="tn">Sara B.</div><div class="tr2">Marketing Mgr, RollXBet</div></div></div></div>
+      <!-- dupe -->
+      <div class="tc"><div class="tst">★★★★★</div><p class="tq">"We booked 12 Twitch streamers in our first month. The escrow system is airtight — funds only release when KPIs are verified. No more payment disputes."</p><div class="tw"><div class="tav">RJ</div><div><div class="tn">Ryan J.</div><div class="tr2">CMO, ViperBet</div></div></div></div>
+      <div class="tc"><div class="tst">★★★★★</div><p class="tq">"The affiliate intro workflow changed everything. We went from manually emailing SEO partners to managing 40+ in one dashboard. Game changer."</p><div class="tw"><div class="tav">NK</div><div><div class="tn">Nina K.</div><div class="tr2">Head of Growth, ShadowCasino</div></div></div></div>
+      <div class="tc"><div class="tst">★★★★★</div><p class="tq">"USDT escrow is how it should always have been. Streamers get paid in crypto instantly after verification. Haven't had a dispute since going live."</p><div class="tw"><div class="tav">DM</div><div><div class="tn">Damian M.</div><div class="tr2">Affiliate Dir, NeonSlots</div></div></div></div>
+      <div class="tc"><div class="tst">★★★★★</div><p class="tq">"The Telegram add-on drove more organic traffic than our entire paid social budget. The team genuinely understands the casino affiliate space."</p><div class="tw"><div class="tav">TW</div><div><div class="tn">Tom W.</div><div class="tr2">Founder, CryptoKings.io</div></div></div></div>
+      <div class="tc"><div class="tst">★★★★★</div><p class="tq">"Upgraded from Aff Tester to Aff Starter in week 3. The ROI is there. 50 affiliate source slots is more than enough to scale what we're doing."</p><div class="tw"><div class="tav">SB</div><div><div class="tn">Sara B.</div><div class="tr2">Marketing Mgr, RollXBet</div></div></div></div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <section class="sec fbg" id="faq">
+    <div class="si">
+      <div class="flay">
+        <div class="rv">
+          <span class="sbadge">FAQ</span>
+          <h2 class="sh">Still got questions?</h2>
+          <p class="sp" style="margin-bottom:2rem">Most answers are below. If not, <a href="#" style="color:var(--orange);text-decoration:underline">chat with us →</a></p>
+          <div style="padding:2rem;border:var(--b);box-shadow:var(--sm);background:var(--white)">
+            <div style="font-size:2.5rem;margin-bottom:.75rem">🐙</div>
+            <p style="font-size:.875rem;color:var(--mid);line-height:1.7;margin-bottom:1.25rem">Enterprise brands with complex multi-market setups get a dedicated solutions engineer to map your existing affiliate stack, plan the integration, and build custom deal structures from scratch.</p>
+            <a href="#" class="btn bor">Enterprise Enquiry →</a>
+          </div>
+        </div>
+        <div class="fitems">
+          <div class="frow"><div class="fq" onclick="faq(this)"><span>What is crypto escrow and why does it matter?</span><span class="ico">+</span></div><div class="fa">Crypto escrow means your campaign budget (USDT or USDC) is held in a Dexpay wallet — inaccessible to anyone until the streamer delivers verified content. This eliminates payment disputes and ensures streamers only get paid when KPIs are met. TRC20 and ERC20 networks are both supported.</div></div>
+          <div class="frow"><div class="fq" onclick="faq(this)"><span>Can I try before committing to a minimum term?</span><span class="ico">+</span></div><div class="fa">The Aff Tester tier has a 2-month minimum and is available once per brand — it's a genuine trial. You get 8 booking requests, 5 affiliate sources, and 3 affiliate intros. Most brands upgrade within their first term.</div></div>
+          <div class="frow"><div class="fq" onclick="faq(this)"><span>Which streaming platforms do you cover?</span><span class="ico">+</span></div><div class="fa">The streamer directory covers Twitch, Kick, and YouTube. Each profile includes verified channel metrics, content history, and commercial rates. TikTok Live expansion is underway.</div></div>
+          <div class="frow"><div class="fq" onclick="faq(this)"><span>What's the difference between sources and intros?</span><span class="ico">+</span></div><div class="fa">Affiliate sources are your traffic partner slots — SEO sites, PPC buyers, influencer channels driving casino traffic. Intros are platform-mediated introductions to new affiliate partners. After a successful intro you lock in a revenue-share, CPA, or hybrid deal.</div></div>
+          <div class="frow"><div class="fq" onclick="faq(this)"><span>What social add-ons are available?</span><span class="ico">+</span></div><div class="fa">Twitter/X management ($1,500/mo), Telegram management ($1,500/mo), X + Telegram bundle ($2,250/mo), full Social Driver ($4,000/mo), and one-time Discord server setup ($1,000). All monthly packages include 30 posts/month and growth strategy.</div></div>
+          <div class="frow"><div class="fq" onclick="faq(this)"><span>How are disputes handled?</span><span class="ico">+</span></div><div class="fa">Either party can raise a dispute inside the platform. An admin reviews evidence from both sides and issues a resolution — which may include full or partial escrow release, refund, or rescheduling. The process is documented and fully auditable.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="sec csec">
+    <div class="cglow"></div>
+    <div class="si cinn">
+      <div class="cocto rv">🐙</div>
+      <h2 class="ch rv">Ready to build your<br>iGaming empire?</h2>
+      <p class="csub rv">Start with Aff Tester at $2,000/mo, or talk to us about a custom Enterprise setup. The octopus has got your back either way.</p>
+      <form class="cform rv" onsubmit="return false">
+        <input type="email" class="cin" placeholder="your@casino.com">
+        <button class="csb">Get Started →</button>
+      </form>
+      <p class="cnote rv">No hidden fees. Minimum terms apply on paid tiers.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="finn">
+      <div class="fgrid">
+        <div>
+          <div class="flogo">🐙 aff-starter</div>
+          <p class="fdesc">The iGaming streamer booking and affiliate management platform. Powered by crypto escrow, built for operators who play to win.</p>
+          <div class="fsoc">
+            <a href="#" title="Twitter/X">𝕏</a>
+            <a href="#" title="Telegram">✈</a>
+            <a href="#" title="Discord">⬡</a>
+            <a href="#" title="LinkedIn">in</a>
+          </div>
+        </div>
+        <div><h4 class="fh">Platform</h4><ul class="flinks"><li><a href="#">Streamer Bookings</a></li><li><a href="#">Affiliate Management</a></li><li><a href="#">Crypto Escrow</a></li><li><a href="#">Social Add-ons</a></li><li><a href="#">Analytics</a></li></ul></div>
+        <div><h4 class="fh">Resources</h4><ul class="flinks"><li><a href="#">Platform Guide</a></li><li><a href="#">API Docs</a></li><li><a href="#">Blog</a></li><li><a href="#">Case Studies</a></li><li><a href="#">Status</a></li></ul></div>
+        <div><h4 class="fh">Company</h4><ul class="flinks"><li><a href="#">About</a></li><li><a href="#">Careers</a></li><li><a href="#">Contact</a></li><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li></ul></div>
+      </div>
+      <div class="fbot"><span>© 2026 aff-starter. All rights reserved.</span><span>Built for iGaming operators 🐙</span></div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+  <script>
+  (() => {
+    /* CURSOR */
+    const dot = document.getElementById('cdot');
+    const ring = document.getElementById('cring');
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; dot.style.cssText=`left:${mx}px;top:${my}px`; });
+    (function lag(){ rx+=(mx-rx)*.11; ry+=(my-ry)*.11; ring.style.cssText=`left:${rx}px;top:${ry}px`; requestAnimationFrame(lag); })();
+    document.querySelectorAll('a,button,.btn,.fq,.fc,.ii').forEach(el => {
+      el.addEventListener('mouseenter', () => ring.classList.add('hov'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('hov'));
+    });
+
+    /* NAV */
+    const nav = document.getElementById('mn');
+    addEventListener('scroll', () => nav.classList.toggle('stuck', scrollY > 60));
+
+    /* GSAP */
+    if (window.gsap) {
+      gsap.registerPlugin(ScrollTrigger);
+      const tl = gsap.timeline({ delay: .2 });
+      tl.from('.htag', { y:24, opacity:0, duration:.5, ease:'power3.out' })
+        .from('.hw2', { y:60, opacity:0, duration:.65, stagger:.1, ease:'power3.out' }, '-=.2')
+        .from('.hp', { y:24, opacity:0, duration:.5, ease:'power3.out' }, '-=.2')
+        .from('.hbtns', { y:20, opacity:0, duration:.4, ease:'power3.out' }, '-=.15')
+        .from('.hproof', { y:16, opacity:0, duration:.4, ease:'power3.out' }, '-=.1')
+        .from('.ow', { x:70, opacity:0, duration:.9, ease:'power3.out' }, .5)
+        .from('.chip', { scale:0, opacity:0, stagger:.2, duration:.4, ease:'back.out(2)' }, 1.1);
+
+      document.querySelectorAll('.rv').forEach(el => gsap.from(el, {
+        scrollTrigger: { trigger:el, start:'top 87%', toggleActions:'play none none none' },
+        y:36, opacity:0, duration:.7, ease:'power3.out'
+      }));
+      document.querySelectorAll('.sg2').forEach((el,i) => gsap.from(el, {
+        scrollTrigger: { trigger:el, start:'top 89%', toggleActions:'play none none none' },
+        y:28, opacity:0, duration:.6, delay:(i%3)*.1, ease:'power3.out'
+      }));
+
+      /* counters */
+      document.querySelectorAll('.sn[data-t]').forEach(el => {
+        const t = parseFloat(el.dataset.t);
+        gsap.from({v:0}, {
+          scrollTrigger: { trigger:el, start:'top 80%', toggleActions:'play none none none' },
+          v:t, duration:1.8, ease:'power2.out',
+          onUpdate() {
+            const v = this.targets()[0].v;
+            el.textContent = (t>=1000 ? Math.round(v).toLocaleString() : Math.round(v)) + '+';
+          }
+        });
+      });
+
+      /* magnetic */
+      document.querySelectorAll('.mag').forEach(btn => {
+        btn.addEventListener('mousemove', e => {
+          const r = btn.getBoundingClientRect();
+          gsap.to(btn, { x:(e.clientX-r.left-r.width/2)*.35, y:(e.clientY-r.top-r.height/2)*.35, duration:.3, ease:'power2.out' });
+        });
+        btn.addEventListener('mouseleave', () => gsap.to(btn, { x:0, y:0, duration:.5, ease:'elastic.out(1,.4)' }));
+      });
+    }
+
+    /* THREE.JS */
+    if (window.THREE) {
+      const canvas = document.getElementById('hc');
+      const R = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:true });
+      R.setPixelRatio(Math.min(devicePixelRatio,2));
+      R.setSize(canvas.offsetWidth, canvas.offsetHeight);
+      const S = new THREE.Scene();
+      const C = new THREE.PerspectiveCamera(60, canvas.offsetWidth/canvas.offsetHeight, .1, 1000);
+      C.position.z = 6;
+      const N=250, pos=new Float32Array(N*3), col=new Float32Array(N*3);
+      const pal = ['#ff2e00','#0040ff','#ffe500','#aaff00'].map(h=>new THREE.Color(h));
+      for(let i=0;i<N;i++){
+        pos[i*3]=(Math.random()-.5)*16; pos[i*3+1]=(Math.random()-.5)*11; pos[i*3+2]=(Math.random()-.5)*9;
+        const c=pal[i%pal.length]; col[i*3]=c.r; col[i*3+1]=c.g; col[i*3+2]=c.b;
+      }
+      const geo=new THREE.BufferGeometry();
+      geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+      geo.setAttribute('color',new THREE.BufferAttribute(col,3));
+      const pts=new THREE.Points(geo,new THREE.PointsMaterial({size:.07,vertexColors:true,transparent:true,opacity:.45}));
+      S.add(pts);
+      let pmx=0,pmy=0;
+      document.addEventListener('mousemove',e=>{pmx=(e.clientX/innerWidth-.5)*2;pmy=-(e.clientY/innerHeight-.5)*2;});
+      (function loop(){requestAnimationFrame(loop);pts.rotation.y+=.0018;pts.rotation.x+=.0006;C.position.x+=(pmx*.3-C.position.x)*.045;C.position.y+=(pmy*.2-C.position.y)*.045;R.render(S,C);})();
+      addEventListener('resize',()=>{R.setSize(canvas.offsetWidth,canvas.offsetHeight);C.aspect=canvas.offsetWidth/canvas.offsetHeight;C.updateProjectionMatrix();});
+    }
+
+    /* FAQ */
+    window.faq = el => {
+      const a = el.nextElementSibling;
+      const wasOpen = a.classList.contains('show');
+      document.querySelectorAll('.fa').forEach(x=>x.classList.remove('show'));
+      document.querySelectorAll('.fq').forEach(x=>x.classList.remove('open'));
+      if(!wasOpen){ a.classList.add('show'); el.classList.add('open'); }
+    };
   })();
-})();
-
-// ── HERO ENTRANCE ──
-gsap.timeline({defaults:{ease:'power3.out'}})
-  .from('#nav',{y:-68,opacity:0,duration:.7})
-  .from('.hero-eyebrow',{opacity:0,y:16,duration:.5},'-=.3')
-  .from('.hero-h1 .ln',{yPercent:108,opacity:0,duration:.8,stagger:.12},'-=.2')
-  .from('.hero-sub',{opacity:0,y:16,duration:.55},'-=.4')
-  .from('.hero-btns',{opacity:0,y:14,duration:.5},'-=.3')
-  .from('.hero-note',{opacity:0,duration:.4},'-=.2')
-  .from('#mascot-box',{opacity:0,scale:.82,y:26,duration:.9,ease:'back.out(1.5)'},'-=.7')
-  .from('.mpip',{opacity:0,scale:.65,duration:.4,stagger:.13,ease:'back.out(2)'},'-=.4')
-  .from('.hero-stats',{opacity:0,y:26,duration:.55},'-=.3');
-
-// ── TENTACLE WIGGLE ──
-['t1','t2','t3','t4','t5','t6','t7','t8'].forEach((id,i)=>{
-  const el=document.getElementById(id);
-  if(!el)return;
-  gsap.to(el,{attr:{transform:`rotate(${i%2===0?2.5:-2.5},155,200)`},duration:1.8+i*.14,repeat:-1,yoyo:true,ease:'sine.inOut',delay:i*.17});
-});
-gsap.to('#mascot-box',{y:-13,duration:2.8,repeat:-1,yoyo:true,ease:'sine.inOut',delay:1.2});
-
-// ── SCROLL REVEALS ──
-gsap.from('.fc',{scrollTrigger:{trigger:'.feat-grid',start:'top 82%'},opacity:0,y:38,duration:.6,stagger:.09,ease:'power2.out'});
-gsap.from('.hiw-step',{scrollTrigger:{trigger:'.hiw-grid',start:'top 80%'},opacity:0,x:-28,duration:.65,stagger:.14,ease:'power2.out'});
-gsap.from('.sc',{scrollTrigger:{trigger:'.stats-grid',start:'top 80%'},opacity:0,y:28,duration:.6,stagger:.1,ease:'power2.out'});
-gsap.from('.pc',{scrollTrigger:{trigger:'.price-grid',start:'top 82%'},opacity:0,y:34,duration:.6,stagger:.12,ease:'power2.out'});
-gsap.utils.toArray('.sec-h2').forEach(el=>gsap.from(el,{scrollTrigger:{trigger:el,start:'top 90%'},opacity:0,y:22,duration:.6,ease:'power2.out'}));
-
-// ── COUNTERS ──
-function runCnt(el){
-  const to=parseFloat(el.dataset.to),dec=parseInt(el.dataset.dec||0);
-  gsap.fromTo({n:0},{n:to},{duration:2.2,ease:'power2.out',onUpdate(){el.textContent=dec>0?this.targets()[0].n.toFixed(dec):Math.floor(this.targets()[0].n).toLocaleString();}});
-}
-document.querySelectorAll('.cnt').forEach(el=>gsap.delayedCall(1.9,()=>runCnt(el)));
-document.querySelectorAll('.cnt2').forEach(el=>ScrollTrigger.create({trigger:el,start:'top 84%',once:true,onEnter:()=>runCnt(el)}));
-
-// ── TABS ──
-document.querySelectorAll('.tab-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    const p=btn.dataset.p;
-    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-    document.querySelectorAll('.tab-panel').forEach(panel=>panel.classList.remove('active'));
-    btn.classList.add('active');
-    const map={brands:'pb',streamers:'ps',affiliates:'pa',agencies:'pag'};
-    const target=document.getElementById(map[p]);
-    if(target){target.classList.add('active');gsap.fromTo(target,{opacity:0,y:14},{opacity:1,y:0,duration:.38,ease:'power2.out'});}
-  });
-});
-
-// ── FAQ ──
-document.querySelectorAll('.fq').forEach(q=>{
-  q.addEventListener('click',()=>{
-    const item=q.parentElement,ans=item.querySelector('.fa'),tog=item.querySelector('.ftog'),open=item.classList.contains('open');
-    document.querySelectorAll('.fi.open').forEach(i=>{i.classList.remove('open');i.querySelector('.ftog').textContent='+';gsap.to(i.querySelector('.fa'),{height:0,duration:.28,ease:'power2.inOut'});});
-    if(!open){item.classList.add('open');tog.textContent='−';const h=ans.querySelector('.fa-in').offsetHeight+1;gsap.fromTo(ans,{height:0},{height:h,duration:.32,ease:'power2.out'});}
-  });
-});
-
-// ── MAGNETIC BUTTONS ──
-document.querySelectorAll('.btn').forEach(btn=>{
-  btn.addEventListener('mousemove',e=>{const r=btn.getBoundingClientRect();gsap.to(btn,{x:(e.clientX-r.left-r.width/2)*.26,y:(e.clientY-r.top-r.height/2)*.26,duration:.28,ease:'power2.out'});});
-  btn.addEventListener('mouseleave',()=>gsap.to(btn,{x:0,y:0,duration:.48,ease:'elastic.out(1,.45)'}));
-});
-
-// ── FEATURE CARD TILT ──
-document.querySelectorAll('.fc').forEach(card=>{
-  card.addEventListener('mousemove',e=>{const r=card.getBoundingClientRect();gsap.to(card,{rotateY:(e.clientX-r.left)/r.width*8-4,rotateX:-((e.clientY-r.top)/r.height*8-4),duration:.28,ease:'power1.out',transformPerspective:700});});
-  card.addEventListener('mouseleave',()=>gsap.to(card,{rotateY:0,rotateX:0,duration:.45,ease:'power2.out'}));
-});
-
-// ── NAV SCROLL SHADOW ──
-ScrollTrigger.create({start:'top -55',onUpdate:s=>document.getElementById('nav').style.boxShadow=s.progress>0?'0 5px 0 #1a1209':''});
-</script>
+  </script>
 </body>
 </html>
