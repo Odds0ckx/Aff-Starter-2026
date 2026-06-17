@@ -197,27 +197,47 @@ header{position:fixed;top:0;left:0;right:0;z-index:1000;transition:padding .3s}
 .card .lnk{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:.88rem;color:var(--orange-l);transition:gap .25s}
 .card .lnk:hover{gap:14px}
 
-/* QUESTTRACKER */
-.qt-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-.qt-copy .big{font-family:var(--fh);font-size:clamp(2.4rem,5vw,4rem);line-height:.95;margin-bottom:8px}
-.qt-copy .big .out{-webkit-text-stroke:2px var(--white);color:transparent}
-.qt-copy .sub{font-family:var(--fh);font-size:clamp(1.2rem,2.4vw,1.7rem);color:var(--cyan);margin-bottom:22px}
-.qt-copy p{color:var(--dim);margin-bottom:18px;max-width:430px}
-.qt-feats{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0 30px}
-.qt-feats .chip{padding:9px 16px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--glass-brd);
-  font-size:.82rem;font-weight:500}
-.qt-phone-wrap{display:flex;justify-content:center;position:relative}
-.phone{width:280px;border-radius:42px;padding:14px;background:linear-gradient(160deg,#2a1056,#150733);
-  border:1px solid rgba(255,255,255,.14);box-shadow:0 40px 90px rgba(0,0,0,.6),0 0 70px rgba(139,61,255,.4);position:relative;z-index:2}
-.phone-screen{border-radius:30px;background:linear-gradient(180deg,#0c0426,#160a3a);padding:22px 16px;overflow:hidden}
-.phone-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
-.phone-top .t{font-family:var(--fh);font-size:.9rem}
-.phone-top .lvl{font-size:.66rem;padding:4px 10px;border-radius:999px;background:var(--grad-btn);font-weight:600}
-.quest{background:rgba(255,255,255,.05);border:1px solid var(--glass-brd);border-radius:16px;padding:13px;margin-bottom:11px}
-.quest .qn{font-size:.78rem;font-weight:600;margin-bottom:8px;display:flex;justify-content:space-between}
-.quest .qn .xp{color:var(--cyan)}
-.bar{height:7px;border-radius:999px;background:rgba(255,255,255,.1);overflow:hidden}
-.bar i{display:block;height:100%;border-radius:999px;background:var(--grad-iri)}
+/* QUESTTRACKER ANIMATED */
+#quest{position:relative;overflow:hidden;padding:0}
+.qt-intro{text-align:center;padding:100px 24px 50px;position:relative;z-index:5}
+.qt-intro h2{font-family:var(--fh);font-size:clamp(2.4rem,5vw,4rem);line-height:.95;margin-bottom:12px}
+.qt-intro h2 .out{-webkit-text-stroke:2px var(--white);color:transparent}
+.qt-intro p{color:var(--dim);font-size:1rem;max-width:560px;margin:0 auto 28px}
+.qt-scroll{position:relative;width:100%;max-width:740px;height:2000px;margin:0 auto;overflow:visible}
+.qt-cards{display:block;width:300px;position:absolute;top:0;left:0;z-index:10}
+@media(min-width:576px){.qt-cards{transform:translateX(4vw)}}
+.qt-card-wrap{display:block;position:relative;width:300px;height:450px;border-radius:20px;margin:25px 0;overflow:clip}
+.qt-card-wrap::before{position:absolute;content:" ";display:block;z-index:0;width:300px;height:450px;border-radius:20px;background:rgba(0,0,0,.25);backdrop-filter:blur(8px)}
+.qt-card-wrap::after{position:absolute;left:0;top:0;z-index:0;content:" ";display:block;width:300px;height:450px;border-radius:20px;background-image:url('data:image/svg+xml,<svg width="300" height="450" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="qbg" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="1" y2="1" gradientTransform="rotate(45)"><stop offset="20%25" stop-color="%238b3dff"/><stop offset="55%25" stop-color="%23f97316"/><stop offset="85%25" stop-color="%23a855f7"/></linearGradient></defs><path fill="url(%23qbg)" stroke="none" d="M 20,0C 9,0 0,9 0,20v 410c 0,11 9,20 20,20h 130 130c 11,0 20,-9 20,-20V 20C 300,9 291,0 280,0Zm 1,1h 161l 95,2c 12,1 19,10 19,20L 299,175v 254c 0,11 -9,20 -20,20H 118l -95,-3c -10,0 -20,-8 -20,-20L 1,275V 22C 1,11 10,1 21,1Z" /></svg>');filter:blur(1px) saturate(1.2) brightness(1.15);opacity:.85}
+.qt-card{display:block;width:300px;height:450px;border-radius:20px;color:#fff;position:relative;-webkit-mask-composite:xor;mask-composite:subtract;background:radial-gradient(closest-corner,rgba(13,4,40,.07) 10%,rgba(13,4,40,.73) 90%),linear-gradient(50deg,rgba(37,232,255,.13) 0%,transparent 25%,transparent 75%,rgba(139,61,255,.13) 100%)}
+.qt-card[data-icon="q1"]{background:radial-gradient(closest-corner,rgba(139,61,255,.05) 10%,rgba(139,61,255,.4) 90%),linear-gradient(50deg,rgba(139,61,255,.07) 0%,transparent 25%,transparent 75%,rgba(249,115,22,.13) 100%);-webkit-mask-image:url(#qtblock),url(#qtIcon1);mask-image:url(#qtblock),url(#qtIcon1)}
+.qt-card[data-icon="q1"]::before{-webkit-mask:url(#qtIcon1b);mask:url(#qtIcon1b)}
+.qt-card[data-icon="q2"]{-webkit-mask-image:url(#qtblock),url(#qtIcon2);mask-image:url(#qtblock),url(#qtIcon2)}
+.qt-card[data-icon="q2"]::before{-webkit-mask:url(#qtIcon2b);mask:url(#qtIcon2b)}
+.qt-card[data-icon="q3"]{-webkit-mask-image:url(#qtblock),url(#qtIcon3);mask-image:url(#qtblock),url(#qtIcon3)}
+.qt-card[data-icon="q3"]::before{-webkit-mask:url(#qtIcon3b);mask:url(#qtIcon3b)}
+.qt-card[data-icon="q4"]{-webkit-mask-image:url(#qtblock),url(#qtIcon4);mask-image:url(#qtblock),url(#qtIcon4)}
+.qt-card[data-icon="q4"]::before{-webkit-mask:url(#qtIcon4b);mask:url(#qtIcon4b)}
+.qt-card::before{position:absolute;left:0;top:0;z-index:0;display:block;content:"";width:300px;height:450px;background:linear-gradient(-45deg,#6d28d9 20%,#f97316,#fb923c,#8b3dff 70%);opacity:.6}
+.qt-card-text{display:flex;align-items:flex-start;justify-content:center;flex-direction:column;height:310px;padding:20px;background-image:linear-gradient(-45deg,#8b3dff 20%,#f97316,#fb923c,#6d28d9 70%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;text-align:left;filter:brightness(2)}
+.qt-card-text.qt-hdr{font-family:'Source Code Pro','Courier New',monospace;font-size:27px;font-weight:400;line-height:1.35;padding-top:30px}
+.qt-card-text.qt-code{font-family:'Source Code Pro','Courier New',monospace;font-size:13px;font-weight:600;line-height:20px}
+.qt-card-text.qt-code dl{width:260px}
+.qt-card-text.qt-code dd{margin-left:20px}
+.qt-card-wrap:nth-child(odd){transform:translateX(0)}
+.qt-card-wrap:nth-child(even){transform:translateX(0)}
+@media(min-width:576px){.qt-card-wrap:nth-child(odd){transform:translateX(6vw)}.qt-card-wrap:nth-child(even){transform:translateX(-3vw)}}
+.qt-world3d{position:sticky;top:10vh;z-index:0;perspective:1000px;overflow:visible;margin:0 auto;width:90%;max-width:1000px;pointer-events:none}
+.qt-tablet{transform-style:preserve-3d;transform-origin:0% 50%;transform:rotateY(18deg);position:relative;display:block;width:100%;height:100vh;padding:40px 40px 40px 120px;background:linear-gradient(109.61deg,#1e1e30 4.26%,#10101a 84.84%);border-radius:30px;opacity:.2}
+.qt-tablet::before{position:absolute;left:110px;top:20px;right:20px;bottom:20px;content:"";display:block;background:#080216;border:1px solid rgba(86,90,100,.53);border-radius:20px}
+#qtSvgPaths{position:absolute;top:75px;left:0;z-index:5;width:740px;max-width:100%;overflow-x:clip;height:2000px;filter:blur(1px)}
+@media(min-width:576px){#qtSvgPaths{transform:translateX(6vw)}}
+#qtSvgPaths use{fill:none;stroke:url(#qtCl1);stroke-linecap:round;stroke-width:var(--qdot);stroke-dashoffset:var(--qt-stroke,0)}
+#qtSvgPaths use[href="#qtP1"]{--qdot:20px;--qgap:50px;stroke-dasharray:var(--qdot) var(--qgap) 120px var(--qgap) var(--qdot) var(--qgap) 300px var(--qgap) var(--qdot) var(--qgap) 150px var(--qgap) var(--qdot) 20000px}
+#qtSvgPaths use[href="#qtP2"]{--qdot:34px;--qgap:60px;stroke-dasharray:var(--qdot) var(--qgap) 120px var(--qgap) var(--qdot) var(--qgap) 300px var(--qgap) var(--qdot) var(--qgap) 150px var(--qgap) var(--qdot) 20000px}
+#qtSvgPaths use[href="#qtP3"]{--qdot:25px;--qgap:40px;stroke-dasharray:var(--qdot) var(--qgap) 120px var(--qgap) var(--qdot) var(--qgap) 250px var(--qgap) var(--qdot) var(--qgap) 150px var(--qgap) var(--qdot) 20000px}
+#qtSvgPaths use[href="#qtP4"]{--qdot:40px;--qgap:70px;stroke-dasharray:var(--qdot) var(--qgap) 100px var(--qgap) var(--qdot) var(--qgap) 200px var(--qdot) 20000px}
+.qt-tp{opacity:0;transition:opacity .4s}
 
 /* CONSULTANCY */
 .con-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:50px;align-items:center}
@@ -384,7 +404,7 @@ footer{background:linear-gradient(180deg,#0a0320,#0d0228);border-top:1px solid v
   .nav-links{display:none}
   .nav .pill.grad{display:none}
   .nav-burger{display:block}
-  .hero-grid,.qt-grid,.con-grid{grid-template-columns:1fr;gap:40px}
+  .hero-grid,.con-grid{grid-template-columns:1fr;gap:40px}
   .hero-visual{order:-1;min-height:340px}
   .feat-grid{grid-template-columns:1fr 1fr}
   .stats{grid-template-columns:1fr 1fr}
@@ -495,35 +515,67 @@ footer{background:linear-gradient(180deg,#0a0320,#0d0228);border-top:1px solid v
   </div>
 </section>
 
-<!-- QUESTTRACKER -->
-<section class="sec wrap" id="quest">
-  <div class="qt-grid">
-    <div class="qt-copy rv-l">
-      <p class="sec-tag">Gamification Platform</p>
-      <div class="big"><span class="out">Quest</span>Tracker</div>
-      <div class="sub">meets Social Engagement</div>
-      <p>Revolutionise player engagement with our QuestTracker platform — combining gamification with social media integration for an immersive experience that drives player loyalty.</p>
-      <div class="qt-feats">
-        <span class="chip">🏆 Social Quests</span>
-        <span class="chip">📊 Leaderboards</span>
-        <span class="chip">⭐ XP &amp; Rewards</span>
-        <span class="chip">🔔 Live Alerts</span>
-        <span class="chip">🔗 API Ready</span>
-      </div>
-      <a href="#contact" class="pill grad">Discover QuestTracker</a>
-    </div>
-    <div class="qt-phone-wrap rv-r">
-      <div class="phone">
-        <div class="phone-screen">
-          <div class="phone-top"><span class="t">QuestTracker</span><span class="lvl">LVL 12</span></div>
-          <div class="quest"><div class="qn"><span>🎰 Slot Sprint</span><span class="xp">+350 XP</span></div><div class="bar"><i style="width:72%"></i></div></div>
-          <div class="quest"><div class="qn"><span>🃏 Live Table King</span><span class="xp">+500 XP</span></div><div class="bar"><i style="width:45%"></i></div></div>
-          <div class="quest"><div class="qn"><span>🏅 Referral Royale</span><span class="xp">+250 XP</span></div><div class="bar"><i style="width:90%"></i></div></div>
-          <div class="quest"><div class="qn"><span>🎁 Daily Streak</span><span class="xp">+120 XP</span></div><div class="bar"><i style="width:60%"></i></div></div>
+<!-- QUESTTRACKER ANIMATED -->
+<section id="quest">
+  <div class="qt-intro rv">
+    <p class="sec-tag">Gamification Platform</p>
+    <h2><span class="out">Quest</span>Tracker</h2>
+    <p>Revolutionise player engagement — social quests, live XP, and leaderboards that turn players into loyal advocates.</p>
+    <a href="#contact" class="pill grad">Discover QuestTracker</a>
+  </div>
+  <div class="qt-scroll">
+    <!-- 3D Tablet background -->
+    <div class="qt-world3d"><div class="qt-tablet"></div></div>
+
+    <!-- 4 masked icon cards -->
+    <div class="qt-cards">
+      <div class="qt-card-wrap">
+        <div class="qt-card" data-icon="q1">
+          <div class="qt-card-text qt-hdr">
+            <span class="qt-tp">Gamify your player journey with real-time social quests.</span>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+      <div class="qt-card-wrap">
+        <div class="qt-card" data-icon="q2">
+          <div class="qt-card-text qt-code">
+            <dl>
+              <dt><span class="qt-tp">quest.create({</span></dt><br>
+              <dd><span class="qt-tp">type: "social",</span><br><span class="qt-tp">xp: 350,</span><br><span class="qt-tp">trigger: "deposit"</span></dd>
+              <dt><span class="qt-tp">});</span></dt>
+            </dl>
+          </div>
+        </div>
+      </div>
+      <div class="qt-card-wrap">
+        <div class="qt-card" data-icon="q3">
+          <div class="qt-card-text qt-code">
+            <dl>
+              <dt><span class="qt-tp">leaderboard: {</span></dt><br>
+              <dd><span class="qt-tp">refresh: "live",</span><br><span class="qt-tp">scope: "global",</span><br><span class="qt-tp">rewards: true</span></dd>
+              <dt><span class="qt-tp">}</span></dt>
+            </dl>
+          </div>
+        </div>
+      </div>
+      <div class="qt-card-wrap">
+        <div class="qt-card" data-icon="q4">
+          <div class="qt-card-text qt-code">
+            <dl>
+              <dt><span class="qt-tp">onUpdate: (e) =&gt; {</span></dt><br>
+              <dd><span class="qt-tp">player.xp += e.pts;</span><br><span class="qt-tp">if (xp &gt; next)</span><br><span class="qt-tp">  levelUp();</span></dd>
+              <dt><span class="qt-tp">}</span></dt>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div><!-- /.qt-cards -->
+
+    <!-- Animated SVG paths -->
+    <svg id="qtSvgPaths" width="740" height="2000" xmlns="http://www.w3.org/2000/svg">
+      <use href="#qtP1" /><use href="#qtP2" /><use href="#qtP3" /><use href="#qtP4" />
+    </svg>
+  </div><!-- /.qt-scroll -->
 </section>
 
 <!-- CONSULTANCY -->
@@ -733,6 +785,7 @@ links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',funct
 
 <!-- ============ GSAP (optional enhancement, fully guarded) ============ -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
 try{
   if(window.gsap){
@@ -747,6 +800,47 @@ try{
       b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();gsap.to(b,{x:(e.clientX-r.left-r.width/2)*.3,y:(e.clientY-r.top-r.height/2)*.4,duration:.3});});
       b.addEventListener('mouseleave',function(){gsap.to(b,{x:0,y:0,duration:.5,ease:'elastic.out(1,.4)'});});
     });
+    /* QuestTracker: register ScrollTrigger and animate paths */
+    if(window.ScrollTrigger){
+      gsap.registerPlugin(ScrollTrigger);
+      var qtScroll=document.querySelector('.qt-scroll');
+      if(qtScroll){
+        /* Animated dashed paths driven by scroll */
+        gsap.to(qtScroll,{
+          '--qt-stroke':function(){return '-2400'},
+          scrollTrigger:{
+            trigger:qtScroll,
+            start:'top 80%',
+            end:'bottom 20%',
+            scrub:1
+          }
+        });
+        /* Reveal card text spans on scroll */
+        document.querySelectorAll('.qt-tp').forEach(function(tp,i){
+          gsap.fromTo(tp,{opacity:0,y:12},{
+            opacity:1,y:0,duration:.6,ease:'power2.out',
+            scrollTrigger:{
+              trigger:tp,
+              start:'top 85%',
+              toggleActions:'play none none none'
+            },
+            delay:i*0.08
+          });
+        });
+        /* Subtle card entrance */
+        document.querySelectorAll('.qt-card-wrap').forEach(function(cw,i){
+          gsap.fromTo(cw,{opacity:0,x:-30},{
+            opacity:1,x:0,duration:.9,ease:'power3.out',
+            scrollTrigger:{
+              trigger:cw,
+              start:'top 88%',
+              toggleActions:'play none none none'
+            },
+            delay:i*0.12
+          });
+        });
+      }
+    }
   }
 }catch(e){}
 </script>
@@ -803,5 +897,44 @@ try{
   }
 }catch(e){}
 </script>
+
+<!-- QuestTracker SVG Defs: paths, masks, gradients -->
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+  <defs>
+    <!-- Animated path lines -->
+    <path id="qtP1" d="m 106,45h 375c 114,0 226,128 226,235v 236c 0,136 -122,222 -224,221l -182,-2c -89,1 -141,42 -142,158l -2,204c -1,117 37,173 134,173h 186c 110,-3 230,111 230,220v 242c 0,113 -125,225 -248,225H 105" />
+    <path id="qtP2" d="m 33,85h 444c 96,0 190,107 190,201v 224c 0,116 -98,188 -190,187l -192,-2c -92,0 -166,75 -166,168v 278c 0,94 74,169 166,169h 194c 92,0 188,94 188,188v 228c 0,94 -104,191 -214,191H 105" />
+    <path id="qtP3" d="m 155,127h 308c 94,0 162,86 162,177v 178c 0,109 -50,174 -166,173L 277,653C 158,653 77,762 77,849v 302c 0,118 107,196 180,197l 204,4c 92,0 164,67 164,160v 200c 0,91 -89,163 -188,163H 105" />
+    <path id="qtP4" d="m 283,173c 2,0 165,0 165,0C 544,175 577,238 577,330v 156c 0,94 -48,126 -140,125L 269,609C 167,602 29,702 29,851v 312c 0,111 101,235 242,235h 162c 109,1 144,49 144,136v 162c 0,73 -53,130 -118,130l -353,1" />
+    <!-- Icon 1: Trophy -->
+    <path id="qtIconShape1" fill="#FFFFFF" d="M 95,222 H 205 V 278 C 205,313 183,333 150,342 C 117,333 95,313 95,278 Z M 72,222 H 95 V 268 C 85,272 76,266 72,252 Z M 205,222 H 228 V 252 C 224,266 215,272 205,268 Z M 132,342 H 168 V 354 H 160 V 365 H 140 V 354 H 132 Z M 114,366 H 186 V 374 H 114 Z" />
+    <!-- Icon 2: Lightning bolt / XP -->
+    <path id="qtIconShape2" fill="#FFFFFF" d="M 172,210 L 138,280 H 162 L 128,350 L 198,262 H 168 Z" />
+    <!-- Icon 3: Star / Leaderboard -->
+    <path id="qtIconShape3" fill="#FFFFFF" d="M 150,208 L 163,252 H 210 L 174,278 L 187,322 L 150,296 L 113,322 L 126,278 L 90,252 H 137 Z" />
+    <!-- Icon 4: Code brackets / API -->
+    <path id="qtIconShape4" fill="#FFFFFF" d="M 122,220 L 88,280 L 122,340 L 107,340 L 73,280 L 107,220 Z M 178,220 L 193,220 L 227,280 L 193,340 L 178,340 L 212,280 Z M 165,215 L 150,345 L 135,345 L 150,215 Z" />
+    <!-- Block mask (full card rectangle) -->
+    <mask id="qtblock"><path fill="#FFFFFF" d="M 0,0 H 300 V 450 H 0 Z" /></mask>
+    <!-- Icon masks (subtract) -->
+    <mask id="qtIcon1"><use href="#qtIconShape1" /></mask>
+    <mask id="qtIcon2"><use href="#qtIconShape2" /></mask>
+    <mask id="qtIcon3"><use href="#qtIconShape3" /></mask>
+    <mask id="qtIcon4"><use href="#qtIconShape4" /></mask>
+    <!-- Icon masks (glow outline) -->
+    <mask id="qtIcon1b"><use href="#qtIconShape1" stroke="#FFFFFF" stroke-width="4" /></mask>
+    <mask id="qtIcon2b"><use href="#qtIconShape2" stroke="#FFFFFF" stroke-width="4" /></mask>
+    <mask id="qtIcon3b"><use href="#qtIconShape3" stroke="#FFFFFF" stroke-width="4" /></mask>
+    <mask id="qtIcon4b"><use href="#qtIconShape4" stroke="#FFFFFF" stroke-width="4" /></mask>
+    <!-- Gradient for animated paths: purple → orange → violet -->
+    <linearGradient id="qtCl1" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="15%" stop-color="#8b3dff"/>
+      <stop offset="40%" stop-color="#a855f7"/>
+      <stop offset="65%" stop-color="#f97316"/>
+      <stop offset="85%" stop-color="#fb923c"/>
+      <stop offset="100%" stop-color="#8b3dff"/>
+    </linearGradient>
+  </defs>
+</svg>
 </body>
 </html>
